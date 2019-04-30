@@ -7,7 +7,8 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-
+import VueDraggable from 'vue-draggable';
+console.log(VueDraggable);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -26,12 +27,42 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+Vue.use(VueDraggable);
+
 
 const app = new Vue({
     el: '#app',
     data:{
-        vehiculesData: []
-    },
+        vehiculesData: [],
+        options: {
+            // dropzoneSelector: '.dropzone',
+            // draggableSelector: '.draggable',
+            // showDropzoneAreas: true,
+            // multipleDropzonesItemsDraggingEnabled: true,
+            // onDrop(event) {
+            //   console.log(event);
+            // },
+            // onDragstart(event) {
+            //   event.stop();
+            // },
+            onDragend(event) {
+              // if you need to stop d&d
+              // event.stop();
+    
+              // you can call component methods, just don't forget 
+              // that here `this` will not reference component scope,
+              // so out from this returned data object make reference
+              // to component instance
+            //   componentInstance.someDummyMethod();
+    
+              // to detect if draggable element is dropped out
+              if (!event.droptarget) {
+                console.log('event is dropped out');
+              }
+            }
+          }
+        },
+        
 
     methods: {
         getInfo(){
@@ -42,9 +73,6 @@ const app = new Vue({
                 // console.log(response);
                 // console.log(response.data.vehicules);
                 chaipa.vehiculesData = _.groupBy(response.data, 'statut');
-                
-                
-                console.log(chaipa.vehiculesData);
               })
               .catch(function (error) {
                 // handle error
@@ -54,6 +82,8 @@ const app = new Vue({
     },
 
     mounted(){
+
+        console.log(this.options)
         this.getInfo()
     },
     

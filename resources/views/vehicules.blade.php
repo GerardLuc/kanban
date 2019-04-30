@@ -19,29 +19,29 @@
                 <div class="col">disponible</div>
                 <div class="col">livraison</div>
             </div>
-            <div class="row">
-                <div class="col">
+            <div v-drag-and-drop:options="options" class="drag-wrapper row">
+                <div class="col dropzone" >
                     <div v-for="(entree, index)  in vehiculesData.entree">
                         <div>@{{ entree.imat }}, @{{ entree.statut }}, @{{ entree.marque }}, @{{ entree.modele }}</div>
                     </div>
                 </div>
-                <div class="col">
-                    <div v-for="(entree, index)  in vehiculesData.inspection">
+                <div class="col dropzone">
+                    <div v-for="(entree, index)  in vehiculesData.inspection" class="draggable">
                         <div>@{{ entree.imat }}, @{{ entree.statut }}, @{{ entree.marque }}, @{{ entree.modele }}</div>
                     </div>
                 </div>
-                <div class="col">
-                    <div v-for="(entree, index)  in vehiculesData['en réparation']">
+                <div class="col dropzone">
+                    <div v-for="(entree, index)  in vehiculesData['en réparation']" class="draggable">
                         <div>@{{ entree.imat }}, @{{ entree.statut }}, @{{ entree.marque }}, @{{ entree.modele }}</div>
                     </div>
                 </div>
-                <div class="col">
-                    <div v-for="(entree, index)  in vehiculesData.disponible">
+                <div class="col dropzone">
+                    <div v-for="(entree, index)  in vehiculesData.disponible" class="draggable">
                         <div>@{{ entree.imat }}, @{{ entree.statut }}, @{{ entree.marque }}, @{{ entree.modele }}</div>
                     </div>
                 </div>
-                <div class="col">
-                    <div v-for="(entree, index)  in vehiculesData.livraison">
+                <div class="col dropzone">
+                    <div v-for="(entree, index)  in vehiculesData.livraison" class="draggable">
                         <div>@{{ entree.imat }}, @{{ entree.statut }}, @{{ entree.marque }}, @{{ entree.modele }}</div>
                     </div>
                 </div>
