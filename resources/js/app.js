@@ -29,4 +29,33 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
+    data:{
+        vehiculesData: []
+    },
+
+    methods: {
+        getInfo(){
+            var chaipa = this;
+            axios.get('/jsonVehicule')
+            .then(function (response) {
+                // handle success
+                // console.log(response);
+                // console.log(response.data.vehicules);
+                chaipa.vehiculesData = _.groupBy(response.data, 'statut');
+                
+                
+                console.log(chaipa.vehiculesData);
+              })
+              .catch(function (error) {
+                // handle error
+                console.log(error);
+              })
+        }
+    },
+
+    mounted(){
+        this.getInfo()
+    },
+    
+    
 });

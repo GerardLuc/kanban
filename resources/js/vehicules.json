@@ -1,0 +1,66 @@
+[{
+            "imat": "23REF32",
+            "marque": "marque",
+            "modele": "modele",
+            "statut": "entree"
+        },
+        {
+            "imat": "94ER43",
+            "marque": "marque",
+            "modele": "modele",
+            "statut": "inspection"
+        },
+        {
+            "imat": "84RGG51",
+            "marque": "marque",
+            "modele": "modele",
+            "statut": "en réparation"
+        },
+        {
+            "imat": "84ERG35",
+            "marque": "marque",
+            "modele": "modele",
+            "statut": "disponible"
+        },
+        {
+            "imat": "94ER43",
+            "marque": "marque",
+            "modele": "modele",
+            "statut": "inspection"
+        },
+        {
+            "imat": "84RGG51",
+            "marque": "marque",
+            "modele": "modele",
+            "statut": "en réparation"
+        },
+        {
+            "imat": "84ERG35",
+            "marque": "marque",
+            "modele": "modele",
+            "statut": "disponible"
+        },
+        {
+            "imat": "94ER43",
+            "marque": "marque",
+            "modele": "modele",
+            "statut": "inspection"
+        },
+        {
+            "imat": "84RGG51",
+            "marque": "marque",
+            "modele": "modele",
+            "statut": "en réparation"
+        },
+        {
+            "imat": "84ERG35",
+            "marque": "marque",
+            "modele": "modele",
+            "statut": "disponible"
+        },
+        {
+            "imat": "21REG01",
+            "marque": "marque",
+            "modele": "modele",
+            "statut": "livraison"
+}]
