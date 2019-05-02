@@ -37161,103 +37161,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/components/vue-draggable-group.component.js":
-/*!*********************************************************!*\
-  !*** ./src/components/vue-draggable-group.component.js ***!
-  \*********************************************************/
-/*! exports provided: VueDraggableGroup */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VueDraggableGroup", function() { return VueDraggableGroup; });
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
-var CUSTOM_EVENTS = ['added', 'removed', 'reordered'];
-var VueDraggableGroup = {
-  name: 'VueDraggableGroup',
-  props: {
-    groups: {
-      required: true,
-      type: Array
-    },
-    value: {
-      required: true,
-      type: Array
-    },
-    itemsKey: {
-      type: String,
-      default: 'items'
-    }
-  },
-  render: function render() {
-    return this.$scopedSlots.default({});
-  },
-  methods: {
-    added: function added(event) {
-      var _this = this,
-          _this$value;
-
-      var newItems = this.groups.map(function (group) {
-        return group[_this.itemsKey];
-      }).reduce(function (prev, curr) {
-        return [].concat(_toConsumableArray(prev), _toConsumableArray(curr));
-      }, []).filter(function (item) {
-        return event.detail.ids.map(Number).indexOf(item.id) >= 0;
-      });
-
-      (_this$value = this.value).splice.apply(_this$value, [event.detail.index, 0].concat(_toConsumableArray(newItems)));
-
-      this.$emit('change', this.groups);
-    },
-    removed: function removed(event) {
-      var newArray = this.value.filter(function (item) {
-        return event.detail.ids.map(Number).indexOf(item.id) < 0;
-      });
-      this.$emit('input', newArray);
-    },
-    reordered: function reordered(event, group) {
-      var reorderedItems = this.value.filter(function (item) {
-        return event.detail.ids.map(Number).indexOf(item.id) >= 0;
-      });
-      var notReorderedItems = this.value.filter(function (item) {
-        return event.detail.ids.map(Number).indexOf(item.id) < 0;
-      });
-      notReorderedItems.splice.apply(notReorderedItems, [event.detail.index, 0].concat(_toConsumableArray(reorderedItems)));
-      this.$emit('input', notReorderedItems);
-      this.$emit('change', this.groups);
-    },
-    addListeners: function addListeners() {
-      var _this2 = this;
-
-      CUSTOM_EVENTS.forEach(function (event) {
-        return _this2.$el.addEventListener(event, _this2[event]);
-      });
-    },
-    removeListeners: function removeListeners() {
-      var _this3 = this;
-
-      CUSTOM_EVENTS.forEach(function (event) {
-        return _this3.$el.removeEventListener(event, _this3[event]);
-      });
-    }
-  },
-  mounted: function mounted() {
-    this.addListeners();
-  },
-  beforeDestroy: function beforeDestroy() {
-    this.removeListeners();
-  }
-};
-
-/***/ }),
-
 /***/ "./src/core/helpers/dom.helper.js":
 /*!****************************************!*\
   !*** ./src/core/helpers/dom.helper.js ***!
@@ -37275,15 +37178,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addDropeffects", function() { return addDropeffects; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearDropeffects", function() { return clearDropeffects; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hasModifier", function() { return hasModifier; });
-var getDroptargets = function getDroptargets(el, dropzoneSelector) {
-  return el.querySelectorAll(dropzoneSelector);
+var getDroptargets = function getDroptargets(el) {
+  return el.querySelectorAll(this.defaultOptions.dropzoneSelector);
 };
-var getDraggables = function getDraggables(el, draggableSelector) {
-  return el.querySelectorAll(draggableSelector);
+var getDraggables = function getDraggables(el) {
+  return el.querySelectorAll(this.defaultOptions.draggableSelector);
 };
 var setInitialAtributes = function setInitialAtributes(el) {
-  this.targets = getDroptargets(el, this.defaultOptions.dropzoneSelector);
-  this.items = getDraggables(el, this.defaultOptions.draggableSelector);
+  this.targets = getDroptargets.bind(this)(el);
+  this.items = getDraggables.bind(this)(el);
 
   for (var i = 0; i < this.targets.length; i++) {
     this.targets[i].setAttribute('aria-dropeffect', 'none');
@@ -37365,59 +37268,11 @@ var hasModifier = function hasModifier(e) {
 
 /***/ }),
 
-/***/ "./src/core/helpers/events.helper.js":
-/*!*******************************************!*\
-  !*** ./src/core/helpers/events.helper.js ***!
-  \*******************************************/
-/*! exports provided: dispatchCustomEvent, dispatchReorderEvents */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dispatchCustomEvent", function() { return dispatchCustomEvent; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dispatchReorderEvents", function() { return dispatchReorderEvents; });
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var createCustomEvent = function createCustomEvent(name, data) {
-  return new CustomEvent(name, {
-    detail: data
-  });
-};
-
-var dispatchCustomEvent = function dispatchCustomEvent(name, data, element) {
-  var customEvent = createCustomEvent(name, data);
-  element.dispatchEvent(customEvent);
-};
-var dispatchReorderEvents = function dispatchReorderEvents(e) {
-  var oldItems = this.selections.droptarget.querySelectorAll(this.defaultOptions.draggableSelector);
-  var index = this.nextItemElement ? Array.prototype.indexOf.call(oldItems, this.nextItemElement) : oldItems.length;
-
-  var eventData = _objectSpread({
-    ids: this.selections.items.map(function (item) {
-      return item.dataset.id;
-    }),
-    index: index,
-    nativeEvent: e
-  }, this.selections);
-
-  if (this.selections.droptarget === this.selections.owner) {
-    dispatchCustomEvent('reordered', eventData, this.selections.droptarget);
-    return;
-  }
-
-  dispatchCustomEvent('added', eventData, this.selections.droptarget);
-  dispatchCustomEvent('removed', eventData, this.selections.owner);
-};
-
-/***/ }),
-
 /***/ "./src/core/helpers/index.js":
 /*!***********************************!*\
   !*** ./src/core/helpers/index.js ***!
   \***********************************/
-/*! exports provided: getDroptargets, getDraggables, setInitialAtributes, removeOldDropzoneAreaElements, getContainer, addDropeffects, clearDropeffects, hasModifier, addSelection, removeSelection, clearSelections, stopDragAndDrop, dispatchCustomEvent, dispatchReorderEvents */
+/*! exports provided: getDroptargets, getDraggables, setInitialAtributes, removeOldDropzoneAreaElements, getContainer, addDropeffects, clearDropeffects, hasModifier, addSelection, removeSelection, clearSelections, stopDragAndDrop */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -37447,12 +37302,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "clearSelections", function() { return _state_helper__WEBPACK_IMPORTED_MODULE_1__["clearSelections"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "stopDragAndDrop", function() { return _state_helper__WEBPACK_IMPORTED_MODULE_1__["stopDragAndDrop"]; });
-
-/* harmony import */ var _events_helper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./events.helper */ "./src/core/helpers/events.helper.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "dispatchCustomEvent", function() { return _events_helper__WEBPACK_IMPORTED_MODULE_2__["dispatchCustomEvent"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "dispatchReorderEvents", function() { return _events_helper__WEBPACK_IMPORTED_MODULE_2__["dispatchReorderEvents"]; });
-
 
 
 
@@ -37496,7 +37345,7 @@ var addSelection = function addSelection(item) {
 
   item.setAttribute('aria-grabbed', 'true'); // add it to the items array
 
-  this.selections.items = this.selections.items.indexOf(item) >= 0 ? this.selections.items : [].concat(_toConsumableArray(this.selections.items), [item]);
+  this.selections.items = _toConsumableArray(this.selections.items).concat([item]);
 };
 var removeSelection = function removeSelection(item) {
   // reset this item's grabbed state
@@ -37544,46 +37393,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers */ "./src/core/helpers/index.js");
 /* harmony import */ var _options__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./options */ "./src/core/options.js");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./state */ "./src/core/state.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
 
 
-var VueDraggable =
-/*#__PURE__*/
-function () {
-  function VueDraggable(el, componentInstance, options) {
-    _classCallCheck(this, VueDraggable);
-
-    Object.assign(this, Object(_state__WEBPACK_IMPORTED_MODULE_3__["getState"])(), {
-      defaultOptions: Object(_options__WEBPACK_IMPORTED_MODULE_2__["getOptions"])(componentInstance, options)
-    }, {
-      el: el
-    });
-    this.registerListeners(el);
-    this.initiate(el);
+var VueDraggable = _objectSpread({}, _options__WEBPACK_IMPORTED_MODULE_2__["VueDraggableOptions"], _state__WEBPACK_IMPORTED_MODULE_3__["VueDraggableState"], {
+  registerListeners: function registerListeners(el) {
+    _listeners__WEBPACK_IMPORTED_MODULE_0__["attachListeners"].bind(this)(el);
+  },
+  initiate: function initiate(el) {
+    _helpers__WEBPACK_IMPORTED_MODULE_1__["setInitialAtributes"].bind(this)(el);
   }
-
-  _createClass(VueDraggable, [{
-    key: "registerListeners",
-    value: function registerListeners(el) {
-      _listeners__WEBPACK_IMPORTED_MODULE_0__["attachListeners"].bind(this)(el);
-    }
-  }, {
-    key: "initiate",
-    value: function initiate(el) {
-      _helpers__WEBPACK_IMPORTED_MODULE_1__["setInitialAtributes"].bind(this)(el);
-    }
-  }]);
-
-  return VueDraggable;
-}();
-;
+});
 
 /***/ }),
 
@@ -37603,18 +37428,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
-
-var reorderDomElements = function reorderDomElements(droptarget, items, nextItemElement) {
-  for (var i = 0; i < items.length; i++) {
-    if (nextItemElement) {
-      droptarget.insertBefore(items[i], nextItemElement);
-      continue;
-    }
-
-    droptarget.appendChild(items[i]);
-  }
-};
-
 var dragendHandler = function dragendHandler(e) {
   if (typeof this.defaultOptions.onDragend === 'function') {
     try {
@@ -37631,11 +37444,14 @@ var dragendHandler = function dragendHandler(e) {
 
 
   if (this.selections.droptarget) {
-    if (this.defaultOptions.reactivityEnabled) {
-      _helpers__WEBPACK_IMPORTED_MODULE_0__["dispatchReorderEvents"].bind(this)(e);
-    } else {
-      // make dom manipulation only if reactivity is disabled
-      reorderDomElements(this.selections.droptarget, this.selections.items, this.nextItemElement);
+    // append the selected items to the end of the target container
+    for (var i = 0; i < this.selections.items.length; i++) {
+      if (this.nextItemElement) {
+        this.selections.droptarget.insertBefore(this.selections.items[i], this.nextItemElement);
+        continue;
+      }
+
+      this.selections.droptarget.appendChild(this.selections.items[i]);
     }
 
     if (typeof this.defaultOptions.onDrop === 'function') {
@@ -37989,13 +37805,8 @@ var keydownHandler = function keydownHandler(e) {
     // Enter or Modifier + M is the drop keystroke
     if (e.keyCode === 13 || e.keyCode === 77 && Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["hasModifier"])(e)) {
       // append the selected items to the end of the target container
-      if (this.defaultOptions.reactivityEnabled) {
-        this.selections.droptarget = e.target;
-        _helpers__WEBPACK_IMPORTED_MODULE_0__["dispatchReorderEvents"].bind(this)(e);
-      } else {
-        for (var _i = 0; _i < this.selections.items.length; _i++) {
-          e.target.appendChild(this.selections.items[_i]);
-        }
+      for (var _i = 0; _i < this.selections.items.length; _i++) {
+        e.target.appendChild(this.selections.items[_i]);
       } // clear dropeffect from the target containers
 
 
@@ -38028,10 +37839,7 @@ __webpack_require__.r(__webpack_exports__);
 var mousedownHandler = function mousedownHandler(e) {
   if (this.defaultOptions.handlerSelector) {
     var handler = e.target.closest(this.defaultOptions.handlerSelector);
-
-    if (!handler) {
-      return;
-    }
+    !handler && e.preventDefault();
   }
 
   var elem = e.target.closest(this.defaultOptions.draggableSelector); // if the element is a draggable item
@@ -38126,6 +37934,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _handlers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./handlers */ "./src/core/listeners/handlers/index.js");
 
 var attachListeners = function attachListeners(el) {
+  var _this = this;
+
   // mousedown event to clear previous selections
   el.addEventListener('mousedown', _handlers__WEBPACK_IMPORTED_MODULE_0__["mousedownHandler"].bind(this), false); // mouseup event to implement multiple selection
 
@@ -38135,11 +37945,13 @@ var attachListeners = function attachListeners(el) {
 
   el.addEventListener('keydown', _handlers__WEBPACK_IMPORTED_MODULE_0__["keydownHandler"].bind(this), false); // dragenter event to set related variable
 
-  el.addEventListener('dragenter', _handlers__WEBPACK_IMPORTED_MODULE_0__["dragenterHandler"].bind(this), false); // dragleave event to maintain target highlighting using that variable
+  el.addEventListener('dragenter', function (e) {
+    return _handlers__WEBPACK_IMPORTED_MODULE_0__["dragenterHandler"].bind(_this)(e);
+  }, false); // dragleave event to maintain target highlighting using that variable
 
   el.addEventListener('dragleave', _handlers__WEBPACK_IMPORTED_MODULE_0__["dragleaveHandler"].bind(this), false); // dragover event to allow the drag by preventing its default
 
-  el.addEventListener('dragover', _handlers__WEBPACK_IMPORTED_MODULE_0__["dragoverHandler"].bind(this), false); // dragend event to implement items being validly dropped into targets,
+  document.addEventListener('dragover', _handlers__WEBPACK_IMPORTED_MODULE_0__["dragoverHandler"].bind(this), false); // dragend event to implement items being validly dropped into targets,
   // or invalidly dropped elsewhere, and to clean-up the interface either way
 
   el.addEventListener('dragend', _handlers__WEBPACK_IMPORTED_MODULE_0__["dragendHandler"].bind(this), false);
@@ -38151,30 +37963,25 @@ var attachListeners = function attachListeners(el) {
 /*!*****************************!*\
   !*** ./src/core/options.js ***!
   \*****************************/
-/*! exports provided: getOptions */
+/*! exports provided: VueDraggableOptions */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getOptions", function() { return getOptions; });
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var getOptions = function getOptions(componentInstance, options) {
-  return _objectSpread({
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VueDraggableOptions", function() { return VueDraggableOptions; });
+var VueDraggableOptions = {
+  defaultOptions: {
     dropzoneSelector: 'ul',
     draggableSelector: 'li',
     handlerSelector: null,
-    reactivityEnabled: true,
-    multipleDropzonesItemsDraggingEnabled: false,
-    showDropzoneAreas: true
-  }, options, {
-    onDragstart: (options.onDragstart || function () {}).bind(componentInstance),
-    onDragend: (options.onDragend || function () {}).bind(componentInstance),
-    onDrop: (options.onDrop || function () {}).bind(componentInstance)
-  });
+    multipleDropzonesItemsDraggingEnabled: true,
+    showDropzoneAreas: true,
+    onDrop: function onDrop() {},
+    onDragstart: function onDragstart() {},
+    onDragend: function onDragend() {}
+  }
 };
+
 
 /***/ }),
 
@@ -38182,26 +37989,24 @@ var getOptions = function getOptions(componentInstance, options) {
 /*!***************************!*\
   !*** ./src/core/state.js ***!
   \***************************/
-/*! exports provided: getState */
+/*! exports provided: VueDraggableState */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getState", function() { return getState; });
-var getState = function getState() {
-  return {
-    targets: null,
-    items: null,
-    nextItemElement: null,
-    // related variable is needed to maintain a reference to the
-    // dragleave's relatedTarget, since it doesn't have e.relatedTarget
-    related: null,
-    selections: {
-      items: [],
-      owner: null,
-      droptarget: null
-    }
-  };
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VueDraggableState", function() { return VueDraggableState; });
+var VueDraggableState = {
+  targets: null,
+  items: null,
+  nextItemElement: null,
+  // related variable is needed to maintain a reference to the
+  // dragleave's relatedTarget, since it doesn't have e.relatedTarget
+  related: null,
+  selections: {
+    items: [],
+    owner: null,
+    droptarget: null
+  }
 };
 
 /***/ }),
@@ -38217,33 +38022,23 @@ var getState = function getState() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VueDraggableDirective", function() { return VueDraggableDirective; });
 /* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./core */ "./src/core/index.js");
-/* harmony import */ var _components_vue_draggable_group_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/vue-draggable-group.component */ "./src/components/vue-draggable-group.component.js");
 
-
-var instances = [];
 var VueDraggableDirective = {
-  bind: function bind(el, options, vnode) {
-    var instance = new _core__WEBPACK_IMPORTED_MODULE_0__["VueDraggable"](el, vnode.context, options.value);
-    instances.push(instance);
+  bind: function bind(el, options) {
+    // override default options
+    Object.assign(_core__WEBPACK_IMPORTED_MODULE_0__["VueDraggable"].defaultOptions, options.value);
+    _core__WEBPACK_IMPORTED_MODULE_0__["VueDraggable"].registerListeners(el);
+    _core__WEBPACK_IMPORTED_MODULE_0__["VueDraggable"].initiate(el);
   },
   componentUpdated: function componentUpdated(el) {
     setTimeout(function () {
-      instances.forEach(function (instance) {
-        if (instance.el !== el) return;
-        instance.initiate(el);
-      });
-    });
-  },
-  unbind: function unbind(el) {
-    instances = instances.filter(function (instance) {
-      return instance.el !== el;
+      _core__WEBPACK_IMPORTED_MODULE_0__["VueDraggable"].initiate(el);
     });
   }
 };
 
 _core__WEBPACK_IMPORTED_MODULE_0__["VueDraggable"].install = function (Vue) {
   Vue.directive('drag-and-drop', VueDraggableDirective);
-  Vue.component('vue-draggable-group', _components_vue_draggable_group_component__WEBPACK_IMPORTED_MODULE_1__["VueDraggableGroup"]);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (_core__WEBPACK_IMPORTED_MODULE_0__["VueDraggable"]);
@@ -50483,29 +50278,9 @@ var app = new Vue({
   data: {
     vehiculesData: [],
     options: {
-      // dropzoneSelector: '.dropzone',
-      // draggableSelector: '.draggable',
-      // showDropzoneAreas: true,
-      // multipleDropzonesItemsDraggingEnabled: true,
-      // onDrop(event) {
-      //   console.log(event);
-      // },
-      // onDragstart(event) {
-      //   event.stop();
-      // },
-      onDragend: function onDragend(event) {
-        // if you need to stop d&d
-        // event.stop();
-        // you can call component methods, just don't forget 
-        // that here `this` will not reference component scope,
-        // so out from this returned data object make reference
-        // to component instance
-        //   componentInstance.someDummyMethod();
-        // to detect if draggable element is dropped out
-        if (!event.droptarget) {
-          console.log('event is dropped out');
-        }
-      }
+      dropzoneSelector: '.dropzone',
+      draggableSelector: '.draggable',
+      multipleDropzonesItemsDraggingEnabled: true
     }
   },
   methods: {

@@ -10,8 +10,6 @@
 </head>
 <body>
     <div class="container" id="app">
-        <div v-drag-and-drop:options="options" class="drag-wrapper">
-      
             <div class="row" >
                 <div class="col">entrée</div>
                 <div class="col">inspection</div>
@@ -21,7 +19,7 @@
             </div>
             <div v-drag-and-drop:options="options" class="drag-wrapper row">
                 <div class="col dropzone" >
-                    <div v-for="(entree, index)  in vehiculesData.entree">
+                    <div v-for="(entree, index)  in vehiculesData.entree" class="draggable">
                         <div>@{{ entree.imat }}, @{{ entree.statut }}, @{{ entree.marque }}, @{{ entree.modele }}</div>
                     </div>
                 </div>
@@ -44,13 +42,10 @@
                     <div v-for="(entree, index)  in vehiculesData.livraison" class="draggable">
                         <div>@{{ entree.imat }}, @{{ entree.statut }}, @{{ entree.marque }}, @{{ entree.modele }}</div>
                     </div>
-                </div>
-                    
-            </div>
-        </div>
-        
-       
+                </div>   
+            </div> 
     </div>
+
     <script src="/js/app.js"></script>
 </body>
 </html>
