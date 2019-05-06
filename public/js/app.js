@@ -51549,23 +51549,10 @@ module.exports = function(module) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.umd.min.js");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_0__);
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
  // console.log(draggable);
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-// Vue.use(VueDraggable);
-// Vue.use(draggable);
 
 var app = new Vue({
   el: '#app',
@@ -51582,26 +51569,32 @@ var app = new Vue({
         // handle success
         // console.log(response);
         // console.log(response.data.vehicules);
-        chaipa.vehiculesData = _.groupBy(response.data, 'statut'); // console.log(chaipa.vehiculesData);
+        chaipa.vehiculesData = response.data;
+        console.log(chaipa.vehiculesData);
       })["catch"](function (error) {
         // handle error
         console.log(error);
       });
     },
-    post: function post(evt) {
+    post: function post(statut, evt) {
       var chaipa = this;
-      console.log(evt); // console.log(evt.to.dataset.statut);
 
-      var to = evt.to.dataset.statut;
-      var send = evt.draggedContext.element;
-      send.statut = to;
-      axios.post('/jsonVehicule', {
-        vehicule: send
-      }).then(function (response) {// console.log(response);
-        // console.log(chaipa.vehiculesData);
-      })["catch"](function (error) {
-        console.log(error);
-      });
+      if (evt.added) {
+        // console.log(evt.added.element);
+        var to = statut;
+        var send = evt.added.element;
+        send.statut = to; // console.log(send.statut);
+
+        axios.post('/jsonVehicule', {
+          vehicule: send
+        }).then(function (response) {// console.log(response);
+          // console.log('bruh');
+          // chaipa.getInfo();
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      } // console.log(evt.to.dataset.statut);
+
     },
     log: function log(evt) {
       console.log(evt);

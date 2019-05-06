@@ -8,15 +8,43 @@ class vehiculeController extends Controller
 {
     public function vehicule(){
 
-        
-
         return view('vehicules');
     }
 
     public function jsonVehicule(){
         // var_dump(resource_path());
-        return file_get_contents(resource_path().'/js/vehicules.json');
+        // return file_get_contents(resource_path().'/js/vehicules.json');
+
+        $collection = collect(json_decode(file_get_contents(resource_path().'/js/vehicules.json')));
+        $grouped = $collection->groupBy('statut');
+
+        // var_dump($groupped);exit;
+
+        if ( !isset($grouped['entree'])){
+            $grouped['entree'] = [];
+        }
         
+        if (!isset($grouped['inspection'])){
+            $grouped['inspection'] = [];
+
+        } 
+        
+        if (!isset($grouped['réparation'])){
+            $grouped['réparation'] = [];
+            
+        } 
+        
+        if (!isset($grouped['disponible'])){
+
+            $grouped['disponible'] = [];
+        } 
+        
+        if (!isset($grouped['livraison'])){
+            
+            $grouped['livraison'] = [];
+        }
+
+        return $grouped;
     }
 
     public function changeStatut(){

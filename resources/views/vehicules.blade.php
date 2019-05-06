@@ -16,7 +16,7 @@
                 <draggable class="list-group" 
                 :list="vehiculesData.entree" 
                 group="people"
-                :move="post" 
+                @change="post('entree', $event)" 
                 
                 data-statut="entree"
                 >
@@ -33,7 +33,7 @@
                     class="list-group"
                     :list="vehiculesData.inspection"
                     group="people"
-                    :move="post"
+                    @change="post('inspection', $event)"
                     
                     data-statut="inspection"
                     
@@ -50,7 +50,7 @@
                     class="list-group"
                     :list="vehiculesData.réparation"
                     group="people"
-                    :move="post"
+                    @change="post('réparation', $event)"
                     
                     data-statut="réparation"
                 >
@@ -65,7 +65,7 @@
                     class="list-group"
                     :list="vehiculesData.disponible"
                     group="people"
-                    :move="post"
+                    @change="post('disponible', $event)"
                     
                     data-statut="disponible"
                 >
@@ -80,7 +80,7 @@
                     class="list-group"
                     :list="vehiculesData.livraison"
                     group="people"
-                    :move="post"
+                    @change="post('livraison', $event)"
                     
                     data-statut="livraison"
                 >
