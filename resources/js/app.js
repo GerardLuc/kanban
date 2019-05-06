@@ -7,39 +7,31 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-import VueDraggable from 'vue-draggable';
-console.log(VueDraggable);
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
 
-// const files = require.context('./', true, /\.vue$/i);
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
+import draggable from 'vuedraggable';
+// console.log(draggable);
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-Vue.use(VueDraggable);
+// Vue.use(VueDraggable);
+
+// Vue.use(draggable);
 
 
 const app = new Vue({
     el: '#app',
+    components : {
+        'draggable': draggable
+    },
     data:{
+
         vehiculesData: [],
-        options: {
-            dropzoneSelector: '.dropzone',
-            draggableSelector: '.draggable',
-            multipleDropzonesItemsDraggingEnabled: true,
-          }
-        },
+        
+    },
         
 
     methods: {
@@ -51,19 +43,52 @@ const app = new Vue({
                 // console.log(response);
                 // console.log(response.data.vehicules);
                 chaipa.vehiculesData = _.groupBy(response.data, 'statut');
+                // console.log(chaipa.vehiculesData);
               })
               .catch(function (error) {
                 // handle error
                 console.log(error);
               })
+              
+        },
+        
+        post: function(evt){
+            var chaipa = this;
+            console.log(evt);
+
+            // console.log(evt.to.dataset.statut);
+            var to = evt.to.dataset.statut;
+            var send = evt.draggedContext.element;
+
+            send.statut = to;
+
+            axios.post('/jsonVehicule', {
+                vehicule: send,
+                })
+                .then(function (response) {
+                    
+                    // console.log(response);
+                    // console.log(chaipa.vehiculesData);
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+        },
+
+
+        log: function(evt) {
+        console.log(evt);
         }
+
+        
+  
     },
+    
 
     mounted(){
 
-        console.log(this.options)
         this.getInfo()
     },
-    
-    
 });

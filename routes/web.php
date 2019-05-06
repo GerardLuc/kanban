@@ -18,3 +18,5 @@ Route::get('/', function () {
 Route::get('/vehicule', 'vehiculeController@vehicule');
 
 Route::get('/jsonVehicule', 'vehiculeController@jsonVehicule');
+
+Route::post('/jsonVehicule', 'vehiculeController@changeStatut');

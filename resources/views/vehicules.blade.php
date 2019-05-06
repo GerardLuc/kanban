@@ -10,41 +10,92 @@
 </head>
 <body>
     <div class="container" id="app">
-            <div class="row" >
-                <div class="col">entrée</div>
-                <div class="col">inspection</div>
-                <div class="col">en réparation</div>
-                <div class="col">disponible</div>
-                <div class="col">livraison</div>
+        <div class="row">
+            <div class="col">
+                <h3>Entrée</h3>
+                <draggable class="list-group" 
+                :list="vehiculesData.entree" 
+                group="people"
+                :move="post" 
+                
+                data-statut="entree"
+                >
+                    <div class="list-group-item" v-for="(entree, index)  in vehiculesData.entree" :key="entree.id" >
+                    @{{ entree.imat }}, @{{ entree.statut }}, @{{ entree.marque }}, @{{ entree.modele }}
+                    </div>
+                </draggable>
+                </div>
+
+                <div class="col">
+                <h3>Inspection</h3>
+
+                <draggable
+                    class="list-group"
+                    :list="vehiculesData.inspection"
+                    group="people"
+                    :move="post"
+                    
+                    data-statut="inspection"
+                    
+                >
+                    <div class="list-group-item" v-for="(entree, index)  in vehiculesData.inspection" :key="entree.id">
+                    @{{ entree.imat }}, @{{ entree.statut }}, @{{ entree.marque }}, @{{ entree.modele }}
+                    </div>
+                </draggable>
+                </div>
+
+                <div class="col">
+                <h3>En reparation</h3>
+                <draggable
+                    class="list-group"
+                    :list="vehiculesData.réparation"
+                    group="people"
+                    :move="post"
+                    
+                    data-statut="réparation"
+                >
+                    <div class="list-group-item" v-for="(entree, index)  in vehiculesData.réparation" :key="entree.id">
+                    @{{ entree.imat }}, @{{ entree.statut }}, @{{ entree.marque }}, @{{ entree.modele }}
+                    </div>
+                </draggable>
+                </div>
+                <div class="col">
+                <h3>Disponible</h3>
+                <draggable
+                    class="list-group"
+                    :list="vehiculesData.disponible"
+                    group="people"
+                    :move="post"
+                    
+                    data-statut="disponible"
+                >
+                    <div class="list-group-item" v-for="(entree, index)  in vehiculesData.disponible" :key="entree.id">
+                    @{{ entree.imat }}, @{{ entree.statut }}, @{{ entree.marque }}, @{{ entree.modele }}
+                    </div>
+                </draggable>
+                </div>
+                <div class="col">
+                <h3>Livraison</h3>
+                <draggable
+                    class="list-group"
+                    :list="vehiculesData.livraison"
+                    group="people"
+                    :move="post"
+                    
+                    data-statut="livraison"
+                >
+                    <div class="list-group-item" v-for="(entree, index)  in vehiculesData.livraison" :key="entree.id">
+                    @{{ entree.imat }}, @{{ entree.statut }}, @{{ entree.marque }}, @{{ entree.modele }}
+                    </div>
+                </draggable>
             </div>
-            <div v-drag-and-drop:options="options" class="drag-wrapper row">
-                <div class="col dropzone" >
-                    <div v-for="(entree, index)  in vehiculesData.entree" class="draggable">
-                        <div>@{{ entree.imat }}, @{{ entree.statut }}, @{{ entree.marque }}, @{{ entree.modele }}</div>
-                    </div>
-                </div>
-                <div class="col dropzone">
-                    <div v-for="(entree, index)  in vehiculesData.inspection" class="draggable">
-                        <div>@{{ entree.imat }}, @{{ entree.statut }}, @{{ entree.marque }}, @{{ entree.modele }}</div>
-                    </div>
-                </div>
-                <div class="col dropzone">
-                    <div v-for="(entree, index)  in vehiculesData['en réparation']" class="draggable">
-                        <div>@{{ entree.imat }}, @{{ entree.statut }}, @{{ entree.marque }}, @{{ entree.modele }}</div>
-                    </div>
-                </div>
-                <div class="col dropzone">
-                    <div v-for="(entree, index)  in vehiculesData.disponible" class="draggable">
-                        <div>@{{ entree.imat }}, @{{ entree.statut }}, @{{ entree.marque }}, @{{ entree.modele }}</div>
-                    </div>
-                </div>
-                <div class="col dropzone">
-                    <div v-for="(entree, index)  in vehiculesData.livraison" class="draggable">
-                        <div>@{{ entree.imat }}, @{{ entree.statut }}, @{{ entree.marque }}, @{{ entree.modele }}</div>
-                    </div>
-                </div>   
-            </div> 
+        </div>
+        
+  </div>
+
+            
     </div>
+    <script src="//cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
 
     <script src="/js/app.js"></script>
 </body>

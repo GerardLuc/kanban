@@ -18,4 +18,36 @@ class vehiculeController extends Controller
         return file_get_contents(resource_path().'/js/vehicules.json');
         
     }
+
+    public function changeStatut(){
+
+        $collection = json_decode(file_get_contents(resource_path().'/js/vehicules.json'));
+
+        $vehiculeId = request('vehicule')['id'];
+
+        // // var_dump($vehiculeId);exit;
+
+        // $filtered = $collection->where('id', $vehiculeId);
+        // // var_dump($filtered->first());exit;
+
+        // $aled = $filtered->first();
+
+        // $aled = request('vehicule');
+
+        // // var_dump($aled);exit;
+
+        // var_dump($collection);
+
+        foreach( $collection as &$toto){
+            if( $toto->id == $vehiculeId ){
+                $toto = request('vehicule');
+
+                // var_dump($toto); exit;
+            }
+        }
+
+        // var_dump($collection);exit;
+        
+        file_put_contents(resource_path().'/js/vehicules.json', json_encode($collection));
+    }
 }
