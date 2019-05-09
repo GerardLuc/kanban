@@ -18,13 +18,13 @@ const app = new Vue({
     methods: {
         getInfo(){
             var chaipa = this;
-            axios.get('/jsonVehicule')
+            axios.get('/ajaxVehicule')
             .then(function (response) {
                 // handle success
                 // console.log(response);
                 // console.log(response.data.vehicules);
                 chaipa.vehiculesData = response.data;
-                console.log(chaipa.vehiculesData);
+                // console.log(chaipa.vehiculesData);
             })
             .catch(function (error) {
                 // handle error
@@ -40,11 +40,11 @@ const app = new Vue({
 
                 var to = statut;
                 var send = evt.added.element;
-                send.statut = to;
+                send.id_statut = to;
 
-                // console.log(send.statut);
+                // console.log(send.id_statut);
     
-                axios.post('/jsonVehicule', {
+                axios.post('/ajaxVehicule', {
                     vehicule: send,
                     })
                     .then(function (response) {

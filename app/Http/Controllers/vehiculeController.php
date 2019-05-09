@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Vehicules;
+use App\Statut;
+use DB;
+use Validator;
+use Redirect;
+
 class vehiculeController extends Controller
 {
     public function vehicule(){
@@ -11,69 +17,59 @@ class vehiculeController extends Controller
         return view('vehicules');
     }
 
-    public function jsonVehicule(){
-        // var_dump(resource_path());
-        // return file_get_contents(resource_path().'/js/vehicules.json');
+    public function ajaxVehicule(){
+        $collection= Vehicules::all();
 
-        $collection = collect(json_decode(file_get_contents(resource_path().'/js/vehicules.json')));
-        $grouped = $collection->groupBy('statut');
+        $vehicules = $collection->groupBy('id_statut');
 
-        if ( !isset($grouped['entree'])){
-            $grouped['entree'] = [];
-        }
-        
-        if (!isset($grouped['inspection'])){
-            $grouped['inspection'] = [];
+        $tab_vehicules = [];
 
-        } 
+        $statuts = Statut::all();
         
-        if (!isset($grouped['réparation'])){
-            $grouped['réparation'] = [];
-            
-        } 
-        
-        if (!isset($grouped['disponible'])){
 
-            $grouped['disponible'] = [];
-        } 
-        
-        if (!isset($grouped['livraison'])){
-            
-            $grouped['livraison'] = [];
+        foreach($vehicules as $key => $vehicule){
+
+            $statut = $statuts->where('id', $key)->first();
+
+            // var_dump($statut);exit;
+
+            $tab_vehicules [$statut['nom']] = $vehicule;
         }
 
-        return $grouped;
+        // var_dump($tab_vehicules);exit;
+
+        return $tab_vehicules;
+    }
+
+    public function getVehicule(){
+
+        $statuts = Statut::all();
+
+        $table_statut = [];
+
+        foreach($statuts as $statut){
+            // id->nom
+            // var_dump($statut->id);exit;
+
+            $table_statut [$statut->id] = $statut->nom;
+        }
+
+        // var_dump($table_statut);exit;
+
+        return view('vehicules', ['statuts' => $table_statut]);
+
     }
 
     public function changeStatut(){
 
-        $collection = json_decode(file_get_contents(resource_path().'/js/vehicules.json'));
+        // var_dump(request('vehicule'));exit;
 
-        $vehiculeId = request('vehicule')['id'];
+        $vehicule = Vehicules::find(request('vehicule')['id']);
 
-        // // var_dump($vehiculeId);exit;
+        $vehicule->id_statut = request('vehicule')['id_statut'];
 
-        // $filtered = $collection->where('id', $vehiculeId);
-        // // var_dump($filtered->first());exit;
+        // var_dump($vehicule);exit;
 
-        // $aled = $filtered->first();
-
-        // $aled = request('vehicule');
-
-        // // var_dump($aled);exit;
-
-        // var_dump($collection);
-
-        foreach( $collection as &$toto){
-            if( $toto->id == $vehiculeId ){
-                $toto = request('vehicule');
-
-                // var_dump($toto); exit;
-            }
-        }
-
-        // var_dump($collection);exit;
-        
-        file_put_contents(resource_path().'/js/vehicules.json', json_encode($collection));
+        $vehicule->save();
     }
 }

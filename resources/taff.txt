@@ -1,9 +1,8 @@
 créer une bdd ->fait
-gérer les véhicules dans la bdd 
+gérer les véhicules dans la bdd -> fait
 nettoyer le code
 
-filter pool marque modele imat
 quand on clique sur l'imat: afficher le détail du vehicule (modale ou onglet)
 ajouter des vehicules
 + photo des bagnoles
-
+filter pool marque modele imat

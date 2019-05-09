@@ -51565,12 +51565,11 @@ var app = new Vue({
   methods: {
     getInfo: function getInfo() {
       var chaipa = this;
-      axios.get('/jsonVehicule').then(function (response) {
+      axios.get('/ajaxVehicule').then(function (response) {
         // handle success
         // console.log(response);
         // console.log(response.data.vehicules);
-        chaipa.vehiculesData = response.data;
-        console.log(chaipa.vehiculesData);
+        chaipa.vehiculesData = response.data; // console.log(chaipa.vehiculesData);
       })["catch"](function (error) {
         // handle error
         console.log(error);
@@ -51583,9 +51582,9 @@ var app = new Vue({
         // console.log(evt.added.element);
         var to = statut;
         var send = evt.added.element;
-        send.statut = to; // console.log(send.statut);
+        send.id_statut = to; // console.log(send.id_statut);
 
-        axios.post('/jsonVehicule', {
+        axios.post('/ajaxVehicule', {
           vehicule: send
         }).then(function (response) {// console.log(response);
           // console.log('bruh');
