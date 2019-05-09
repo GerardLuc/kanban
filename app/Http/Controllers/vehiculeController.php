@@ -26,6 +26,13 @@ class vehiculeController extends Controller
 
         $statuts = Statut::all();
         
+        foreach($statuts as $statut){
+            if(!isset($vehicules[$statut->id])){
+                $vehicules [$statut->id] = [];
+            }
+        }
+
+        // var_dump($vehicules[1]);exit;
 
         foreach($vehicules as $key => $vehicule){
 
@@ -71,5 +78,12 @@ class vehiculeController extends Controller
         // var_dump($vehicule);exit;
 
         $vehicule->save();
+    }
+
+    public function ajaxModal(){
+        $vehicule = Vehicules::find(request('id_vehicule'));
+
+        var_dump(request('id_vehicule'));
+        return $vehicule;
     }
 }

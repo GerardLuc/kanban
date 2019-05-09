@@ -13,6 +13,7 @@ const app = new Vue({
 
     data:{
         vehiculesData: [],
+        vehiculeModal: [],
     },
         
     methods: {
@@ -32,8 +33,7 @@ const app = new Vue({
             })
         },
         
-        post: function(statut, evt){
-            var chaipa = this;
+        Change: function(statut, evt){
 
             if (evt.added){
                 // console.log(evt.added.element);
@@ -57,10 +57,23 @@ const app = new Vue({
                         console.log(error);
                     });
             }
-
             // console.log(evt.to.dataset.statut);
+        },
 
+        getModal(id_vehicule){
+            var chaipa = this;
+            axios.get('/ajaxModal',{
+               id_vehicule: id_vehicule,
+            })
+            .then(function (response) {
+                chaipa.vehiculeModal = response.data;
 
+                console.log(response);
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
         },
 
         log: function(evt) {

@@ -23,3 +23,5 @@ Route::get('ajaxVehicule', 'vehiculeController@ajaxVehicule');
 
 // Route::post('jsonVehicule', 'vehiculeController@changeStatut');
 Route::post('ajaxVehicule', 'vehiculeController@changeStatut');
+
+Route::get('ajaxModal', 'vehiculeController@ajaxModal');

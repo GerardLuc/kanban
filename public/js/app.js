@@ -51560,7 +51560,8 @@ var app = new Vue({
     'draggable': vuedraggable__WEBPACK_IMPORTED_MODULE_0___default.a
   },
   data: {
-    vehiculesData: []
+    vehiculesData: [],
+    vehiculeModal: []
   },
   methods: {
     getInfo: function getInfo() {
@@ -51575,9 +51576,7 @@ var app = new Vue({
         console.log(error);
       });
     },
-    post: function post(statut, evt) {
-      var chaipa = this;
-
+    Change: function Change(statut, evt) {
       if (evt.added) {
         // console.log(evt.added.element);
         var to = statut;
@@ -51594,6 +51593,18 @@ var app = new Vue({
         });
       } // console.log(evt.to.dataset.statut);
 
+    },
+    getModal: function getModal(id_vehicule) {
+      var chaipa = this;
+      axios.get('/ajaxModal', {
+        id_vehicule: id_vehicule
+      }).then(function (response) {
+        chaipa.vehiculeModal = response.data;
+        console.log(response);
+      })["catch"](function (error) {
+        // handle error
+        console.log(error);
+      });
     },
     log: function log(evt) {
       console.log(evt);
