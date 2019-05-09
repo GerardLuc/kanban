@@ -18,8 +18,6 @@ class vehiculeController extends Controller
         $collection = collect(json_decode(file_get_contents(resource_path().'/js/vehicules.json')));
         $grouped = $collection->groupBy('statut');
 
-        // var_dump($groupped);exit;
-
         if ( !isset($grouped['entree'])){
             $grouped['entree'] = [];
         }

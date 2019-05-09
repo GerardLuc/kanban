@@ -13,12 +13,7 @@
         <div class="row">
             <div class="col">
                 <h3>Entrée</h3>
-                <draggable class="list-group" 
-                :list="vehiculesData.entree" 
-                group="people"
-                @change="post('entree', $event)" 
-                
-                data-statut="entree"
+                <draggable class="list-group" :list="vehiculesData.entree" group="people" @change="post('entree', $event)" data-statut="entree"
                 >
                     <div class="list-group-item" v-for="(entree, index)  in vehiculesData.entree" :key="entree.id" >
                     @{{ entree.imat }}, @{{ entree.statut }}, @{{ entree.marque }}, @{{ entree.modele }}
