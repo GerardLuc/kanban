@@ -83,7 +83,13 @@ class vehiculeController extends Controller
     public function ajaxModal(){
         $vehicule = Vehicules::find(request('id_vehicule'));
 
-        var_dump(request('id_vehicule'));
+        // $statut = Statut::where('id', $vehicule->id_statut)->first();
+
+        $statut = Statut::find($vehicule->id_statut);
+        $vehicule->statut = $statut->nom;
+
+
+        // var_dump($vehicule);exit;
         return $vehicule;
     }
 }

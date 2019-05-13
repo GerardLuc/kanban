@@ -16,12 +16,15 @@ Route::get('/', function () {
 });
 
 // Route::get('/vehicule', 'vehiculeController@vehicule');
-Route::get('vehicule', 'vehiculeController@getVehicule');
+Route::get('/vehicule', 'vehiculeController@getVehicule');
 
 // Route::get('jsonVehicule', 'vehiculeController@jsonVehicule');
-Route::get('ajaxVehicule', 'vehiculeController@ajaxVehicule');
+Route::get('/ajaxVehicule', 'vehiculeController@ajaxVehicule');
 
 // Route::post('jsonVehicule', 'vehiculeController@changeStatut');
-Route::post('ajaxVehicule', 'vehiculeController@changeStatut');
+Route::post('/ajaxVehicule', 'vehiculeController@changeStatut');
 
-Route::get('ajaxModal', 'vehiculeController@ajaxModal');
+Route::get('/ajaxModal', 'vehiculeController@ajaxModal');
+
+Route::get('vehicule/crea', "vehiculeController@crea");
+Route::post('vehicule/crea', "vehiculeController@enregistrer");

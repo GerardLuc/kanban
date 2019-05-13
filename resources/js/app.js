@@ -60,15 +60,18 @@ const app = new Vue({
             // console.log(evt.to.dataset.statut);
         },
 
-        getModal(id_vehicule){
+        getModal: function(id_vehicule){
             var chaipa = this;
             axios.get('/ajaxModal',{
-               id_vehicule: id_vehicule,
+
+                params: {
+                    id_vehicule: id_vehicule,
+                }
             })
             .then(function (response) {
                 chaipa.vehiculeModal = response.data;
 
-                console.log(response);
+                console.log(vehiculeModal);
             })
             .catch(function (error) {
                 // handle error

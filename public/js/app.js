@@ -51597,10 +51597,12 @@ var app = new Vue({
     getModal: function getModal(id_vehicule) {
       var chaipa = this;
       axios.get('/ajaxModal', {
-        id_vehicule: id_vehicule
+        params: {
+          id_vehicule: id_vehicule
+        }
       }).then(function (response) {
         chaipa.vehiculeModal = response.data;
-        console.log(response);
+        console.log(vehiculeModal);
       })["catch"](function (error) {
         // handle error
         console.log(error);
