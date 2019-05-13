@@ -3,9 +3,11 @@
 @section('content')
 
         <div class="row">
+            {{-- crawl de tous les vehicules dans l'objet $statuts --}}
             @foreach( $statuts as $id => $nom )
                 <div class="col">
                     <h3>{{ $nom }}</h3>
+                    {{-- draggable: balise de vue.draggable avec les parametres exclusifs du plugin + boucle for pour crawler chaque vehicule de la colone --}}
                     <draggable class="list-group" :list="vehiculesData.{{ $nom }}" group="people" @change="Change('{{ $id }}', $event)" >
                         <div class="list-group-item" v-for="(entree, index)  in vehiculesData.{{ $nom }}" :key="entree.id" >
                                 <button type="button" class="btn btn-info" data-toggle="modal"  data-target="#vehiculeModal" v-on:click="getModal( entree.id )" >@{{ entree.imat }}</button> {{ $nom }}, @{{ entree.marque }}, @{{ entree.modele }}
@@ -17,7 +19,7 @@
             @endforeach
         </div>
 
-        <!-- Modal -->
+        <!-- Modale affichant les infos d'un vehicule -->
         <div class="modal fade" id="vehiculeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
             <div class="modal-dialog" role="document" >
                 <div class="modal-content" >
@@ -41,14 +43,6 @@
         </div>
     {{-- fin de la modal --}}
        
-    
-
-     
-{{-- @change="post('entree', $event)" --}}
-    
-
-   
-
     @section('script')
     
         <script src="//cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>

@@ -2,13 +2,14 @@
 
 @section('content')
 
-
+{{-- formulaire de création de vehicule OU edition si le vehicule existe (param url) --}}
     <form action="@if ( $vehicule->exists )
         /vehicule/edit/{{ $vehicule->id }}
     @else
         /vehicule/edit
     @endif" method="post" enctype="multipart/form-data">
 
+    {{-- token de sécurité laravel --}}
     {{ csrf_field() }}
 
 
@@ -39,7 +40,7 @@
         </div>
     </form>
 
-
+{{-- affichage des erreurs du form --}}
 @if (isset($errors))
 <!-- {{ var_dump($errors) }} -->
         @foreach ($errors->messages() as $error)

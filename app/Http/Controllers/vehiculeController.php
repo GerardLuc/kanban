@@ -18,15 +18,24 @@ class vehiculeController extends Controller
         return view('vehicules');
     }
 
+
+    /**
+     * recupere les vehicules via ajax et return $tab_vehicules
+     */
     public function ajaxVehicule(){
+
+        // get all vehicules dans une collection
         $collection= Vehicules::all();
 
+        // groupage des vehicules par id_statut
         $vehicules = $collection->groupBy('id_statut');
 
         $tab_vehicules = [];
 
+        // get all statuts
         $statuts = Statut::all();
         
+        // creation d'une colonne vide si un groupe ne contient pas de vehicules
         foreach($statuts as $statut){
             if(!isset($vehicules[$statut->id])){
                 $vehicules [$statut->id] = [];
@@ -35,19 +44,21 @@ class vehiculeController extends Controller
 
         // var_dump($vehicules[1]);exit;
 
+        // appelle le nom du statut par vehicule
+
         foreach($vehicules as $key => $vehicule){
 
             $statut = $statuts->where('id', $key)->first();
 
-            // var_dump($statut);exit;
-
             $tab_vehicules [$statut['nom']] = $vehicule;
         }
 
-        // var_dump($tab_vehicules);exit;
-
         return $tab_vehicules;
     }
+
+    /**
+     * get all from statut sans param et retourne la vue avec les statuts en param
+     */
 
     public function getVehicule(){
 
@@ -57,30 +68,29 @@ class vehiculeController extends Controller
 
         foreach($statuts as $statut){
             // id->nom
-            // var_dump($statut->id);exit;
-
             $table_statut [$statut->id] = $statut->nom;
         }
-
-        // var_dump($table_statut);exit;
 
         return view('vehicules', ['statuts' => $table_statut]);
 
     }
 
+    
+    /**
+     * change l'id_statut en BDD
+     */
     public function changeStatut(){
-
-        // var_dump(request('vehicule'));exit;
 
         $vehicule = Vehicules::find(request('vehicule')['id']);
 
         $vehicule->id_statut = request('vehicule')['id_statut'];
 
-        // var_dump($vehicule);exit;
-
         $vehicule->save();
     }
 
+    /**
+     * affiche le contenu de vehicule et le nom du statut et retourne la vehicule pour la modale
+     */
     public function ajaxModal(){
         $vehicule = Vehicules::find(request('id_vehicule'));
 
@@ -89,8 +99,6 @@ class vehiculeController extends Controller
         $statut = Statut::find($vehicule->id_statut);
         $vehicule->statut = $statut->nom;
 
-
-        // var_dump($vehicule);exit;
         return $vehicule;
     }
 
@@ -101,16 +109,14 @@ class vehiculeController extends Controller
         return view('crea', ['vehicule' => $vehicule]);
     }
 
-    public function enregistrer($id=null)
-     {
-
-        /**
+    /**
          * validation des données
          * données requises
-         * email unique dans la table user
+         * email unique dans la table vehicules
          *  
          */  
-
+    public function enregistrer($id=null)
+     {
         $validate = [
             'imat' => 'required',
             'marque' => 'required',
@@ -141,14 +147,6 @@ class vehiculeController extends Controller
 
         // ajout des données en base
 
-        //  if(!$id){
-        //     $vehicule = new Vehicules;
- 
-        //  } else {
-        //      $vehicule = Vehicules::findOrFail($id);
-
-        //  }
-
          $vehicule = Vehicules::where('id', $id)->firstOrNew([]);
 
 
@@ -157,33 +155,14 @@ class vehiculeController extends Controller
          $vehicule->modele = request('modele');
          $vehicule->id_statut = Statut::STATUTDEBAZ;
 
-        //  var_dump(request('image'));exit;
-        //  var_dump(file_get_contents(request('image')));exit;
-
-        //  var_dump(request('image')->getClientOriginalName());exit;
-
         if(request('image')){
 
-        // var_dump(request('image'));exit;
-
             $path = '/public/images/'.request('image')->getClientOriginalName();
-
-            // var_dump($path);exit;
 
             $machin = Storage::put($path, file_get_contents(request('image')), 'public');
             var_dump($machin);exit;
             $vehicule->image = $path;
         }
-
-         
-        //  var_dump($path);exit;
-
-        
-
-        //  var_dump('tata');exit;
-           
-        //  $user->image = request('image');
-
 
          $vehicule->save();
 
@@ -192,17 +171,15 @@ class vehiculeController extends Controller
          return redirect('/vehicule');
      }
 
+
+     /**
+      * ajout de l'image en BDD, retourne un code 200 si reussi
+      */
      public function image($id)
      {
-        //  var_dump($id);exit;
         $vehicule = Vehicules::find($id);
 
-        // var_dump($sbra = Storage::get($vehicule->image));exit;
-    
         return response(Storage::get($vehicule->image), 200)
             ->header('Content-Type', 'image/png');
      }
-
-    
-
 }

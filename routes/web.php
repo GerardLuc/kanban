@@ -15,17 +15,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/vehicule', 'vehiculeController@vehicule');
+
+// affichage de la liste des vehicules
 Route::get('/vehicule', 'vehiculeController@getVehicule');
 
-// Route::get('jsonVehicule', 'vehiculeController@jsonVehicule');
+// changement ajax du statut
 Route::get('/ajaxVehicule', 'vehiculeController@ajaxVehicule');
-
-// Route::post('jsonVehicule', 'vehiculeController@changeStatut');
 Route::post('/ajaxVehicule', 'vehiculeController@changeStatut');
 
+// affichage de la modal en ajax
 Route::get('/ajaxModal', 'vehiculeController@ajaxModal');
 
+
+// creation/edition d'un vehicule (+ image)
 Route::get('/vehicule/edit/{id?}', "vehiculeController@edit");
 Route::post('/vehicule/edit/{id?}', "vehiculeController@enregistrer");
 

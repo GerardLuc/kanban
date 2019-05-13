@@ -13,6 +13,7 @@ class Vehicules extends Migration
      */
     public function up()
     {
+
         Schema::create('vehicules', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('imat');

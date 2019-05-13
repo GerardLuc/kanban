@@ -3,7 +3,6 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import draggable from 'vuedraggable';
-// console.log(draggable);
 
 const app = new Vue({
     el: '#app',
@@ -17,49 +16,51 @@ const app = new Vue({
     },
         
     methods: {
+        /**
+         * get toutes les infos de la table vehicule et les pousse dans vehiculesData[]
+         */
         getInfo(){
             var chaipa = this;
             axios.get('/ajaxVehicule')
             .then(function (response) {
                 // handle success
-                // console.log(response);
-                // console.log(response.data.vehicules);
                 chaipa.vehiculesData = response.data;
-                // console.log(chaipa.vehiculesData);
             })
             .catch(function (error) {
                 // handle error
                 console.log(error);
             })
         },
+
         
+        /**
+         * drag and drop les cartes de vehicules utilisant Draggable
+         * @param {vehicule} statut 
+         * @param {onDrop} evt 
+         */
         Change: function(statut, evt){
 
             if (evt.added){
-                // console.log(evt.added.element);
-
                 var to = statut;
                 var send = evt.added.element;
                 send.id_statut = to;
-
-                // console.log(send.id_statut);
     
                 axios.post('/ajaxVehicule', {
                     vehicule: send,
                     })
                     .then(function (response) {
                         
-                        // console.log(response);
-                        // console.log('bruh');
-                        // chaipa.getInfo();
                     })
                     .catch(function (error) {
                         console.log(error);
                     });
             }
-            // console.log(evt.to.dataset.statut);
         },
 
+        /**
+         * get les parametres d'un vehicule pour les pousser dans vehiculeModal pour les afficher dans une modale
+         * @param {vehicule} id_vehicule 
+         */
         getModal: function(id_vehicule){
             var chaipa = this;
 
@@ -75,7 +76,6 @@ const app = new Vue({
 
                 chaipa.vehiculeModal.link = 'vehicule/image/'+response.data.id;
 
-                // console.log(vehiculeModal);
             })
             .catch(function (error) {
                 // handle error
@@ -88,6 +88,9 @@ const app = new Vue({
         }
     },    
 
+    /**
+     * appelle getInfo au chargement de la page
+     */
     mounted(){
         this.getInfo();
     },

@@ -10,6 +10,7 @@
 
     </head>
     <body>
+        {{-- appelle la fonction app dans la vue --}}
         <div class="container" id="app">
             @yield('content')
 

@@ -51552,7 +51552,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
- // console.log(draggable);
 
 var app = new Vue({
   el: '#app',
@@ -51564,36 +51563,42 @@ var app = new Vue({
     vehiculeModal: []
   },
   methods: {
+    /**
+     * get toutes les infos de la table vehicule et les pousse dans vehiculesData[]
+     */
     getInfo: function getInfo() {
       var chaipa = this;
       axios.get('/ajaxVehicule').then(function (response) {
         // handle success
-        // console.log(response);
-        // console.log(response.data.vehicules);
-        chaipa.vehiculesData = response.data; // console.log(chaipa.vehiculesData);
+        chaipa.vehiculesData = response.data;
       })["catch"](function (error) {
         // handle error
         console.log(error);
       });
     },
+
+    /**
+     * drag and drop les cartes de vehicules utilisant Draggable
+     * @param {vehicule} statut 
+     * @param {onDrop} evt 
+     */
     Change: function Change(statut, evt) {
       if (evt.added) {
-        // console.log(evt.added.element);
         var to = statut;
         var send = evt.added.element;
-        send.id_statut = to; // console.log(send.id_statut);
-
+        send.id_statut = to;
         axios.post('/ajaxVehicule', {
           vehicule: send
-        }).then(function (response) {// console.log(response);
-          // console.log('bruh');
-          // chaipa.getInfo();
-        })["catch"](function (error) {
+        }).then(function (response) {})["catch"](function (error) {
           console.log(error);
         });
-      } // console.log(evt.to.dataset.statut);
-
+      }
     },
+
+    /**
+     * get les parametres d'un vehicule pour les pousser dans vehiculeModal pour les afficher dans une modale
+     * @param {vehicule} id_vehicule 
+     */
     getModal: function getModal(id_vehicule) {
       var chaipa = this;
       axios.get('/ajaxModal', {
@@ -51602,7 +51607,7 @@ var app = new Vue({
         }
       }).then(function (response) {
         chaipa.vehiculeModal = response.data;
-        chaipa.vehiculeModal.link = 'vehicule/image/' + response.data.id; // console.log(vehiculeModal);
+        chaipa.vehiculeModal.link = 'vehicule/image/' + response.data.id;
       })["catch"](function (error) {
         // handle error
         console.log(error);
@@ -51612,6 +51617,10 @@ var app = new Vue({
       console.log(evt);
     }
   },
+
+  /**
+   * appelle getInfo au chargement de la page
+   */
   mounted: function mounted() {
     this.getInfo();
   }

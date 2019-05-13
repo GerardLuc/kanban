@@ -15,6 +15,8 @@ class Vehicules extends Model
 
     public function statut(){
 
+        // joint vers la table statut
+
         return $this->belongsTo('App\Statut', 'id_statut');
     }
 
