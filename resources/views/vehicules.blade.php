@@ -2,7 +2,6 @@
 
 @section('content')
 
-    <div class="container" id="app">
         <div class="row">
             @foreach( $statuts as $id => $nom )
                 <div class="col">
@@ -29,7 +28,10 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                            @{{ vehiculeModal.imat }}, Statut: @{{ vehiculeModal.statut }}, @{{ vehiculeModal.marque }}, @{{ vehiculeModal.modele }}
+                        @{{ vehiculeModal.imat }}, Statut: @{{ vehiculeModal.statut }}, @{{ vehiculeModal.marque }}, @{{ vehiculeModal.modele }}
+                 
+                        <img v-if="vehiculeModal.image" :src="vehiculeModal.link" alt="photo">
+            
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -39,7 +41,7 @@
         </div>
     {{-- fin de la modal --}}
        
-    </div>
+    
 
      
 {{-- @change="post('entree', $event)" --}}

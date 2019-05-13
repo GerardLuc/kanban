@@ -3,8 +3,9 @@ gérer les véhicules dans la bdd -> fait
 nettoyer le code -> fait
 
 quand on clique sur l'imat: afficher le détail du vehicule (modale ou onglet) -> en cours -> fait
-ajouter des vehicules
-+ photo des bagnoles
+ajouter des vehicules -> fait
++ photo des bagnoles -> fait
+
 filter pool marque modele imat
 
 tout commenter

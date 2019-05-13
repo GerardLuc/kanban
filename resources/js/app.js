@@ -62,6 +62,8 @@ const app = new Vue({
 
         getModal: function(id_vehicule){
             var chaipa = this;
+
+
             axios.get('/ajaxModal',{
 
                 params: {
@@ -71,7 +73,9 @@ const app = new Vue({
             .then(function (response) {
                 chaipa.vehiculeModal = response.data;
 
-                console.log(vehiculeModal);
+                chaipa.vehiculeModal.link = 'vehicule/image/'+response.data.id;
+
+                // console.log(vehiculeModal);
             })
             .catch(function (error) {
                 // handle error

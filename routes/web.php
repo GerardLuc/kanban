@@ -26,5 +26,7 @@ Route::post('/ajaxVehicule', 'vehiculeController@changeStatut');
 
 Route::get('/ajaxModal', 'vehiculeController@ajaxModal');
 
-Route::get('vehicule/crea', "vehiculeController@crea");
-Route::post('vehicule/crea', "vehiculeController@enregistrer");
+Route::get('/vehicule/edit/{id?}', "vehiculeController@edit");
+Route::post('/vehicule/edit/{id?}', "vehiculeController@enregistrer");
+
+Route::get("vehicule/image/{id}", "vehiculeController@image");
