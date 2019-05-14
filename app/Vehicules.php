@@ -20,6 +20,27 @@ class Vehicules extends Model
         return $this->belongsTo('App\Statut', 'id_statut');
     }
 
+        /**
+     * Scope a query to only include some imats.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
 
-
+    public function scopeRecherche($query)
+    {
+        if( request('imat') != ''){
+            $query->where('imat', 'like' , '%'.request('imat').'%');
+        }
+        if( request('id_statut') != ''){
+            $query->where('id_statut', request('id_statut'));
+        }
+        if( request('modele') != ''){            
+            $query->where('modele', 'like' ,'%'.request('modele').'%');
+    }
+        if( request('marque') != ''){
+            $query->where('marque', 'like' ,'%'.request('marque').'%');
+        }
+        return $query;
+    }
 }

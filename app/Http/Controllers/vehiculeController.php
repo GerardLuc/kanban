@@ -23,38 +23,40 @@ class vehiculeController extends Controller
      * recupere les vehicules via ajax et return $tab_vehicules
      */
     public function ajaxVehicule(){
+        // var_dump(request('modele'));exit;
 
         // get all vehicules dans une collection
-        $collection= Vehicules::all();
+        // $collection= Vehicules::all();
+        $collection= Vehicules::recherche()->get();
 
         // groupage des vehicules par id_statut
         $vehicules = $collection->groupBy('id_statut');
 
-        $tab_vehicules = [];
+        if(!isset($tab_vehicules)){
+            // get all statuts
+            $statuts = Statut::all();
+            
+            // creation d'une colonne vide si un groupe ne contient pas de vehicules
+            foreach($statuts as $statut){
+                if(!isset($vehicules[$statut->id])){
+                    $vehicules [$statut->id] = [];
+                }
+            }
 
-        // get all statuts
-        $statuts = Statut::all();
-        
-        // creation d'une colonne vide si un groupe ne contient pas de vehicules
-        foreach($statuts as $statut){
-            if(!isset($vehicules[$statut->id])){
-                $vehicules [$statut->id] = [];
+            // appelle le nom du statut par vehicule
+
+            foreach($vehicules as $key => $vehicule){
+
+                $statut = $statuts->where('id', $key)->first();
+
+                $tab_vehicules [$statut['nom']] = $vehicule;
             }
         }
 
-        // var_dump($vehicules[1]);exit;
-
-        // appelle le nom du statut par vehicule
-
-        foreach($vehicules as $key => $vehicule){
-
-            $statut = $statuts->where('id', $key)->first();
-
-            $tab_vehicules [$statut['nom']] = $vehicule;
-        }
 
         return $tab_vehicules;
     }
+
 
     /**
      * get all from statut sans param et retourne la vue avec les statuts en param
@@ -123,11 +125,11 @@ class vehiculeController extends Controller
             'modele' => 'required',
             
 
-         ]; 
+        ]; 
 
-         if(!$id){
-             $validate ['image'] = 'required';
-         }
+        if(!$id){
+            $validate ['image'] = 'required';
+        }
 
         $validatedData = Validator::make(request()->all(), $validate);
 
@@ -139,7 +141,6 @@ class vehiculeController extends Controller
              * @return la page précédente
              * display les messages d'erreur
              */
-            // var_dump($validatedData->messages());exit;
             
             return back()->withErrors($validatedData->messages());
    
@@ -160,7 +161,6 @@ class vehiculeController extends Controller
             $path = '/public/images/'.request('image')->getClientOriginalName();
 
             $machin = Storage::put($path, file_get_contents(request('image')), 'public');
-            var_dump($machin);exit;
             $vehicule->image = $path;
         }
 
@@ -182,4 +182,5 @@ class vehiculeController extends Controller
         return response(Storage::get($vehicule->image), 200)
             ->header('Content-Type', 'image/png');
      }
+
 }

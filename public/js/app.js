@@ -51560,7 +51560,11 @@ var app = new Vue({
   },
   data: {
     vehiculesData: [],
-    vehiculeModal: []
+    vehiculeModal: [],
+    formImat: '',
+    formModele: '',
+    formMarque: '',
+    formStatut: ''
   },
   methods: {
     /**
@@ -51569,6 +51573,23 @@ var app = new Vue({
     getInfo: function getInfo() {
       var chaipa = this;
       axios.get('/ajaxVehicule').then(function (response) {
+        // handle success
+        console.log('zrg');
+        chaipa.vehiculesData = response.data;
+      })["catch"](function (error) {
+        // handle error
+        console.log(error);
+      });
+    },
+    postRecherche: function postRecherche() {
+      var chaipa = this;
+      console.log(chaipa.formImat);
+      axios.post('/vehicule', {
+        imat: chaipa.formImat,
+        id_statut: chaipa.formStatut,
+        marque: chaipa.formMarque,
+        modele: chaipa.formModele
+      }).then(function (response) {
         // handle success
         chaipa.vehiculesData = response.data;
       })["catch"](function (error) {

@@ -18,6 +18,7 @@ Route::get('/', function () {
 
 // affichage de la liste des vehicules
 Route::get('/vehicule', 'vehiculeController@getVehicule');
+Route::post('/vehicule', 'vehiculeController@ajaxVehicule');
 
 // changement ajax du statut
 Route::get('/ajaxVehicule', 'vehiculeController@ajaxVehicule');

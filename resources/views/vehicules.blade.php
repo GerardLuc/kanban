@@ -2,6 +2,10 @@
 
 @section('content')
 
+
+        {{-- include les searchbar --}}
+        @include('searchbar')
+
         <div class="row">
             {{-- crawl de tous les vehicules dans l'objet $statuts --}}
             @foreach( $statuts as $id => $nom )
