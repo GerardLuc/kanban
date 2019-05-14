@@ -22,7 +22,7 @@ class vehiculeController extends Controller
     /**
      * recupere les vehicules via ajax et return $tab_vehicules
      */
-    public function ajaxVehicule(){
+    public function ajaxGetVehicule(){
         // var_dump(request('modele'));exit;
 
         // get all vehicules dans une collection
@@ -92,7 +92,7 @@ class vehiculeController extends Controller
     /**
      * affiche le contenu de vehicule et le nom du statut et retourne la vehicule pour la modale
      */
-    public function ajaxModal(){
+    public function ajaxGetModal(){
         $vehicule = Vehicules::find(request('id_vehicule'));
 
         // $statut = Statut::where('id', $vehicule->id_statut)->first();
@@ -103,7 +103,7 @@ class vehiculeController extends Controller
         return $vehicule;
     }
 
-    public function edit($id = null){
+    public function editVehicule($id = null){
 
         $vehicule = Vehicules::where('id', $id)->firstOrNew([]);
 
@@ -116,7 +116,7 @@ class vehiculeController extends Controller
          * email unique dans la table vehicules
          *  
          */  
-    public function enregistrer($id=null)
+    public function save($id=null)
      {
         $validate = [
             'imat' => 'required',
@@ -153,7 +153,7 @@ class vehiculeController extends Controller
          $vehicule->imat = request('imat');
          $vehicule->marque = request('marque');
          $vehicule->modele = request('modele');
-         $vehicule->id_statut = Statut::STATUTDEBAZ;
+         $vehicule->id_statut = Statut::defaultStatut;
 
         if(request('image')){
 
@@ -174,7 +174,7 @@ class vehiculeController extends Controller
      /**
       * ajout de l'image en BDD, retourne un code 200 si reussi
       */
-     public function image($id)
+     public function imageVehicule($id)
      {
         $vehicule = Vehicules::find($id);
 
@@ -182,11 +182,11 @@ class vehiculeController extends Controller
             ->header('Content-Type', 'image/png');
      }
 
-     public function delete(){
+     public function softDeleteVehicule(){
         
-        $tata = request('id_vehicule');
+        $id_vehicule = request('id_vehicule');
 
-        $vehicule = Vehicules::find($tata);
+        $vehicule = Vehicules::find($id_vehicule);
         $vehicule->delete();
 
         return 'true';

@@ -14,10 +14,10 @@
                 <div class="col">
                     <h3>{{ $nom }}</h3>
                     {{-- draggable: balise de vue.draggable avec les parametres exclusifs du plugin + boucle for pour crawler chaque vehicule de la colone --}}
-                    <draggable class="list-group" :list="vehiculesData.{{ $nom }}" group="people" @change="Change('{{ $id }}', $event)" >
+                    <draggable class="list-group" :list="vehiculesData.{{ $nom }}" group="people" @change="changeStatut('{{ $id }}', $event)" >
                         <div class="list-group-item" v-for="(entree, index)  in vehiculesData.{{ $nom }}" :key="entree.id" >
                                 <button type="button" class="btn btn-info" data-toggle="modal"  data-target="#vehiculeModal" v-on:click="getModal( entree.id )" >@{{ entree.imat }}</button> {{ $nom }}, @{{ entree.marque }}, @{{ entree.modele }}
-                        <button  type="button" class="btn btn-danger" name="toto" v-on:click="softDelete( entree.id )">supprimer</button>
+  
                         </div>
                     </draggable>
                 </div>
@@ -36,11 +36,11 @@
                     </div>
                     <div class="modal-body">
                         @{{ vehiculeModal.imat }}, Statut: @{{ vehiculeModal.statut }}, @{{ vehiculeModal.marque }}, @{{ vehiculeModal.modele }}
-                 
                         <img v-if="vehiculeModal.image" :src="vehiculeModal.link" alt="photo">
             
                     </div>
                     <div class="modal-footer">
+                        <button  type="button" class="btn btn-danger" name="toto" v-on:click="softDeleteVehicules( vehiculeModal.id )" data-dismiss="modal">supprimer</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>

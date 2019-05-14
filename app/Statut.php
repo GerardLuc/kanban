@@ -13,7 +13,7 @@ class Statut extends Model
 
     // constante pour instancier le statut de base d'un vehicule lors de la création dudit vehicule
 
-    const STATUTDEBAZ = 1;
+    const defaultStatut = 1;
 
     public function vehicules(){
 

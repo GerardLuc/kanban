@@ -18,20 +18,20 @@ Route::get('/', function () {
 
 // affichage de la liste des vehicules
 Route::get('/vehicule', 'vehiculeController@getVehicule');
-Route::post('/vehicule', 'vehiculeController@ajaxVehicule');
+Route::post('/ajaxRecherche', 'vehiculeController@ajaxGetVehicule');
 
 // changement ajax du statut
-Route::get('/ajaxVehicule', 'vehiculeController@ajaxVehicule');
+Route::get('/ajaxVehicule', 'vehiculeController@ajaxGetVehicule');
 Route::post('/ajaxVehicule', 'vehiculeController@changeStatut');
 
 // affichage de la modal en ajax
-Route::get('/ajaxModal', 'vehiculeController@ajaxModal');
+Route::get('/ajaxModal', 'vehiculeController@ajaxGetModal');
 
 
 // creation/edition d'un vehicule (+ image)
-Route::get('/vehicule/edit/{id?}', "vehiculeController@edit");
-Route::post('/vehicule/edit/{id?}', "vehiculeController@enregistrer");
+Route::get('/vehicule/edit/{id?}', "vehiculeController@editVehicule");
+Route::post('/vehicule/edit/{id?}', "vehiculeController@save");
 
-Route::get("vehicule/image/{id}", "vehiculeController@image");
+Route::get("vehicule/image/{id}", "vehiculeController@imageVehicule");
 
-Route::post('vehicule/delete', "VehiculeController@delete");
+Route::post('vehicule/delete', "VehiculeController@softDeleteVehicule");

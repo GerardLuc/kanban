@@ -24,12 +24,12 @@ const app = new Vue({
         /**
          * get toutes les infos de la table vehicule et les pousse dans vehiculesData[]
          */
-        getInfo(){
-            var chaipa = this;
+        getAjaxInfo(){
+            var baseThis = this;
             axios.get('/ajaxVehicule')
             .then(function (response) {
                 // handle success
-                chaipa.vehiculesData = response.data;
+                baseThis.vehiculesData = response.data;
             })
             .catch(function (error) {
                 // handle error
@@ -38,16 +38,16 @@ const app = new Vue({
         },
 
         postRecherche(){
-            var chaipa = this;
-            axios.post('/vehicule',{
-                imat: chaipa.formImat,
-                id_statut: chaipa.formStatut,
-                marque: chaipa.formMarque,
-                modele: chaipa.formModele,
+            var baseThis = this;
+            axios.post('/ajaxRecherche',{
+                imat: baseThis.formImat,
+                id_statut: baseThis.formStatut,
+                marque: baseThis.formMarque,
+                modele: baseThis.formModele,
             })           
             .then(function (response) {
                 // handle success
-                chaipa.vehiculesData = response.data;
+                baseThis.vehiculesData = response.data;
             })
             .catch(function (error) {
                 // handle error
@@ -61,15 +61,15 @@ const app = new Vue({
          * @param {vehicule} statut 
          * @param {onDrop} evt 
          */
-        Change: function(statut, evt){
+        changeStatut: function(statut, evt){
 
             if (evt.added){
-                var to = statut;
-                var send = evt.added.element;
-                send.id_statut = to;
+                var id_statut = statut;
+                var postVehicule = evt.added.element;
+                postVehicule.id_statut = id_statut;
     
                 axios.post('/ajaxVehicule', {
-                    vehicule: send,
+                    vehicule: postVehicule,
                     })
                     .then(function (response) {
                         
@@ -85,7 +85,7 @@ const app = new Vue({
          * @param {vehicule} id_vehicule 
          */
         getModal: function(id_vehicule){
-            var chaipa = this;
+            var baseThis = this;
 
 
             axios.get('/ajaxModal',{
@@ -95,9 +95,9 @@ const app = new Vue({
                 }
             })
             .then(function (response) {
-                chaipa.vehiculeModal = response.data;
+                baseThis.vehiculeModal = response.data;
 
-                chaipa.vehiculeModal.link = 'vehicule/image/'+response.data.id;
+                baseThis.vehiculeModal.link = 'vehicule/image/'+response.data.id;
 
             })
             .catch(function (error) {
@@ -106,13 +106,13 @@ const app = new Vue({
             })
         },
 
-        softDelete: function(id_vehicule){
-            var chaipa = this;
+        softDeleteVehicules: function(id_vehicule){
+            var baseThis = this;
             axios.post('vehicule/delete',{
                 id_vehicule: id_vehicule,
             })           
             .then(function (response) {
-                chaipa.postRecherche();
+                baseThis.postRecherche();
                 // handle success
             })
             .catch(function (error) {
@@ -126,9 +126,9 @@ const app = new Vue({
         }
     },    
     /**
-     * appelle getInfo au chargement de la page
+     * appelle getAjaxInfo au chargement de la page
      */
     mounted(){
-        this.getInfo();
+        this.getAjaxInfo();
     },
 });
