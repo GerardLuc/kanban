@@ -26,7 +26,6 @@ class vehiculeController extends Controller
         // var_dump(request('modele'));exit;
 
         // get all vehicules dans une collection
-        // $collection= Vehicules::all();
         $collection= Vehicules::recherche()->get();
 
         // groupage des vehicules par id_statut
@@ -182,5 +181,16 @@ class vehiculeController extends Controller
         return response(Storage::get($vehicule->image), 200)
             ->header('Content-Type', 'image/png');
      }
+
+     public function delete(){
+        
+        $tata = request('id_vehicule');
+
+        $vehicule = Vehicules::find($tata);
+        $vehicule->delete();
+
+        return 'true';
+    }
+    
 
 }

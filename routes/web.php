@@ -33,3 +33,5 @@ Route::get('/vehicule/edit/{id?}', "vehiculeController@edit");
 Route::post('/vehicule/edit/{id?}', "vehiculeController@enregistrer");
 
 Route::get("vehicule/image/{id}", "vehiculeController@image");
+
+Route::post('vehicule/delete', "VehiculeController@delete");

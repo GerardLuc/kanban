@@ -17,6 +17,7 @@ const app = new Vue({
         formModele : '',
         formMarque : '',
         formStatut : '',
+
     },
         
     methods: {
@@ -28,7 +29,6 @@ const app = new Vue({
             axios.get('/ajaxVehicule')
             .then(function (response) {
                 // handle success
-                console.log('zrg');
                 chaipa.vehiculesData = response.data;
             })
             .catch(function (error) {
@@ -39,9 +39,6 @@ const app = new Vue({
 
         postRecherche(){
             var chaipa = this;
-
-            console.log(chaipa.formImat);
-            
             axios.post('/vehicule',{
                 imat: chaipa.formImat,
                 id_statut: chaipa.formStatut,
@@ -109,11 +106,25 @@ const app = new Vue({
             })
         },
 
+        softDelete: function(id_vehicule){
+            var chaipa = this;
+            axios.post('vehicule/delete',{
+                id_vehicule: id_vehicule,
+            })           
+            .then(function (response) {
+                chaipa.postRecherche();
+                // handle success
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+        },
+
         log: function(evt) {
         console.log(evt);
         }
     },    
-
     /**
      * appelle getInfo au chargement de la page
      */

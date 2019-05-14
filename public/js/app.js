@@ -51574,7 +51574,6 @@ var app = new Vue({
       var chaipa = this;
       axios.get('/ajaxVehicule').then(function (response) {
         // handle success
-        console.log('zrg');
         chaipa.vehiculesData = response.data;
       })["catch"](function (error) {
         // handle error
@@ -51583,7 +51582,6 @@ var app = new Vue({
     },
     postRecherche: function postRecherche() {
       var chaipa = this;
-      console.log(chaipa.formImat);
       axios.post('/vehicule', {
         imat: chaipa.formImat,
         id_statut: chaipa.formStatut,
@@ -51629,6 +51627,17 @@ var app = new Vue({
       }).then(function (response) {
         chaipa.vehiculeModal = response.data;
         chaipa.vehiculeModal.link = 'vehicule/image/' + response.data.id;
+      })["catch"](function (error) {
+        // handle error
+        console.log(error);
+      });
+    },
+    softDelete: function softDelete(id_vehicule) {
+      var chaipa = this;
+      axios.post('vehicule/delete', {
+        id_vehicule: id_vehicule
+      }).then(function (response) {
+        chaipa.postRecherche(); // handle success
       })["catch"](function (error) {
         // handle error
         console.log(error);

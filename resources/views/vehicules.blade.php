@@ -6,6 +6,8 @@
         {{-- include les searchbar --}}
         @include('searchbar')
 
+        <a href="/vehicule/edit" role="button" class="btn btn-primary">créer un vehicule</a>
+
         <div class="row">
             {{-- crawl de tous les vehicules dans l'objet $statuts --}}
             @foreach( $statuts as $id => $nom )
@@ -15,8 +17,7 @@
                     <draggable class="list-group" :list="vehiculesData.{{ $nom }}" group="people" @change="Change('{{ $id }}', $event)" >
                         <div class="list-group-item" v-for="(entree, index)  in vehiculesData.{{ $nom }}" :key="entree.id" >
                                 <button type="button" class="btn btn-info" data-toggle="modal"  data-target="#vehiculeModal" v-on:click="getModal( entree.id )" >@{{ entree.imat }}</button> {{ $nom }}, @{{ entree.marque }}, @{{ entree.modele }}
-                            {{-- @{{ entree.id }} --}}
-                            
+                        <button  type="button" class="btn btn-danger" name="toto" v-on:click="softDelete( entree.id )">supprimer</button>
                         </div>
                     </draggable>
                 </div>
@@ -45,6 +46,7 @@
                 </div>
             </div>
         </div>
+
     {{-- fin de la modal --}}
        
     @section('script')

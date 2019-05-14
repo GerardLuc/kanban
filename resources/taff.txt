@@ -6,6 +6,5 @@ quand on clique sur l'imat: afficher le détail du vehicule (modale ou onglet) -
 ajouter des vehicules -> fait
 + photo des bagnoles -> fait
 
-filter pool marque modele imat ->en cours
-
-tout commenter ->en cours
+filter pool marque modele imat ->c bon
+tout commenter ->wala
