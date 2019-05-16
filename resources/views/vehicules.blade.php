@@ -53,7 +53,7 @@
                     </div>
                     <div class="modal-footer">
 
-                        <button  type="button" class="btn btn-danger" name="toto" v-on:click="softDeleteVehicules( vehiculeModal.id )" data-dismiss="modal">supprimer</button>
+                        <button  type="button" class="btn btn-danger alertSupress" v-on:click="softDeleteVehicules( vehiculeModal.id )">supprimer</button>
                         <a :href="`/vehicule/edit/${vehiculeModal.id}`" class="btn btn-secondary">Editer</a>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
 

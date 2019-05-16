@@ -1,13 +1,16 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-
+import VuejsDialog from "vuejs-dialog";
 import draggable from 'vuedraggable';
+
+Vue.use(VuejsDialog);
 
 const app = new Vue({
     el: '#app',
     components : {
-        'draggable': draggable
+        'draggable': draggable,
+        'VuejsDialog' : VuejsDialog,
     },
 
     data:{
@@ -105,19 +108,33 @@ const app = new Vue({
             })
         },
 
+        
+
         softDeleteVehicules: function(id_vehicule){
             var baseThis = this;
-            axios.post('vehicule/delete',{
-                id_vehicule: id_vehicule,
-            })           
-            .then(function (response) {
-                baseThis.postRecherche();
-                // handle success
+
+            this.$dialog.confirm('Voulez-vous vraiment supprimer ce vehicule?')
+            .then(function () {
+
+                axios.post('vehicule/delete',{
+                    id_vehicule: id_vehicule,
+                })           
+                .then(function (response) {
+                    baseThis.postRecherche();
+                    // handle success
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                })
+
+                console.log('Clicked on proceed')
             })
-            .catch(function (error) {
-                // handle error
-                console.log(error);
-            })
+            .catch(function () {
+                console.log('Clicked on cancel')
+            });
+            
+            
         },
 
         
@@ -149,3 +166,5 @@ const app = new Vue({
 
     },
 });
+
+

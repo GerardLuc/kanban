@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "vuedraggable": "^2.20.0"
+        "vuedraggable": "^2.20.0",
+        "vuejs-dialog": "^1.4.0"
     }
 }
