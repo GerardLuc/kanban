@@ -6,19 +6,19 @@
         {{-- include les searchbar --}}
         @include('searchbar')
             <div  class="row ml0 mr0">
-                <div v-for="nom in Statuts" class="col-lg col-md-4 col-sm-6  col-xs-12 colonne"> 
-                <h3>@{{ nom }} @{{ vehiculesData[nom] == undefined?0:vehiculesData[nom].length }}</h3>
+                <div v-for="(nom, id) in Statuts" class="col-lg col-md-4 col-sm-6  col-xs-12 colonne"> 
+                <h3>@{{ nom }}: <span>@{{ vehiculesData[nom] == undefined ? 0 : vehiculesData[nom].length }}</span></h3>
 
                         <div class="scroll">
                             {{-- draggable: balise de vue.draggable avec les parametres exclusifs du plugin + boucle for pour crawler chaque vehicule de la colone --}}
-                            <draggable class="list-group" ghost-class="ghost" :options="{animation:150}" :list="vehiculesData[nom]" group="people" @change="changeStatut('id', $event)" >
+                            <draggable class="list-group" ghost-class="ghost"  v-bind="dragOptions" :list="vehiculesData[nom]" group="people" @change="changeStatut( id , $event)" >
         
                                 <div class="list-group-item card" v-for="(entree, index)  in vehiculesData[nom]" :key="entree.id">    
                                     <div class="card-body">
-                                        <h5 class="card-title">@{{ entree.imat }}</h5>
+                                        <h3 class="btn btn-outline-info" data-toggle="modal"  data-target="#vehiculeModal" v-on:click="getModal( entree.id )">@{{ entree.imat }}</h3>
                                         <p class="card-text">@{{ nom }} </p>
                                         <p class="card-text">marque @{{ entree.marque }}, modèle @{{ entree.modele }}</p>
-                                        <button class="btn btn-outline-info" data-toggle="modal"  data-target="#vehiculeModal" v-on:click="getModal( entree.id )">Voir la carte</button>
+                                        
                                     </div>  
                                 </div>
                                 
@@ -40,8 +40,6 @@
                     <div class="modal-body card">
                             <img v-if="vehiculeModal.image" class="card-img-top" :src="vehiculeModal.link" alt="photo">
                             <div class="card-body">
-                                
-                                <h5 class="card-title">@{{ vehiculeModal.imat }}</h5>
                                 <p class="card-text">@{{ Statuts[vehiculeModal.id_statut] }} </p>
                                 <p class="card-text">marque @{{ vehiculeModal.marque }}, modèle @{{ vehiculeModal.modele }}</p>
                             </div>

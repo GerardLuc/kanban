@@ -51648,6 +51648,14 @@ var app = new Vue({
       console.log(evt);
     }
   },
+  computed: {
+    dragOptions: function dragOptions() {
+      return {
+        animation: 150,
+        ghostClass: "ghost"
+      };
+    }
+  },
 
   /**
    * appelle getAjaxInfo au chargement de la page

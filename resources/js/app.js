@@ -119,14 +119,25 @@ const app = new Vue({
                 console.log(error);
             })
         },
+
+        
+        
         
 
         log: function(evt) {
             console.log(evt);
         },
 
- 
     }, 
+
+    computed: {
+        dragOptions() {
+            return {
+                animation: 150,
+                ghostClass: "ghost"
+            };
+        }
+    },
 
     
 

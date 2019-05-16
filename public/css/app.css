@@ -10690,7 +10690,7 @@ li {
 }
 
 .scroll {
-  max-height: 50rem;
+  max-height: 45rem;
   overflow-y: auto;
 }
 
@@ -10713,6 +10713,15 @@ li {
 
 h3 {
   text-align: center;
+  background: #c8ebfb;
+  margin: 0 1px;
+  padding: 10px 0;
+}
+
+h3 span {
+  padding: 0 10px;
+  background: #fff;
+  margin: 0 15px;
 }
 
 .colonne {
@@ -10721,10 +10730,10 @@ h3 {
 }
 
 .ml0 {
-  margin-left: 0 !important;
+  margin-left: 0;
 }
 
 .mr0 {
-  margin-right: 0 !important;
+  margin-right: 0;
 }
 
