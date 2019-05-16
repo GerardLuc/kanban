@@ -17,7 +17,7 @@ const app = new Vue({
         formModele : '',
         formMarque : '',
         formStatut : '',
-
+        Statuts: Statuts,
     },
         
     methods: {
@@ -30,6 +30,7 @@ const app = new Vue({
             .then(function (response) {
                 // handle success
                 baseThis.vehiculesData = response.data;
+                
             })
             .catch(function (error) {
                 // handle error
@@ -86,8 +87,6 @@ const app = new Vue({
          */
         getModal: function(id_vehicule){
             var baseThis = this;
-
-
             axios.get('/ajaxModal',{
 
                 params: {
@@ -120,15 +119,22 @@ const app = new Vue({
                 console.log(error);
             })
         },
+        
 
         log: function(evt) {
-        console.log(evt);
-        }
-    },    
+            console.log(evt);
+        },
+
+ 
+    }, 
+
+    
+
     /**
      * appelle getAjaxInfo au chargement de la page
      */
     mounted(){
         this.getAjaxInfo();
+
     },
 });

@@ -5,26 +5,29 @@
 
         {{-- include les searchbar --}}
         @include('searchbar')
+            <div  class="row ml0 mr0">
+                <div v-for="nom in Statuts" class="col-lg col-md-4 col-sm-6  col-xs-12 colonne"> 
+                <h3>@{{ nom }} @{{ vehiculesData[nom] == undefined?0:vehiculesData[nom].length }}</h3>
 
-        <a href="/vehicule/edit" role="button" class="btn btn-primary">créer un vehicule</a>
-
-        <div class="row">
-            {{-- crawl de tous les vehicules dans l'objet $statuts --}}
-            @foreach( $statuts as $id => $nom )
-                <div class="col">
-                    <h3>{{ $nom }}</h3>
-                    {{-- draggable: balise de vue.draggable avec les parametres exclusifs du plugin + boucle for pour crawler chaque vehicule de la colone --}}
-                    <draggable class="list-group" :list="vehiculesData.{{ $nom }}" group="people" @change="changeStatut('{{ $id }}', $event)" >
-                        <div class="list-group-item" v-for="(entree, index)  in vehiculesData.{{ $nom }}" :key="entree.id" >
-                                <button type="button" class="btn btn-info" data-toggle="modal"  data-target="#vehiculeModal" v-on:click="getModal( entree.id )" >@{{ entree.imat }}</button> {{ $nom }}, @{{ entree.marque }}, @{{ entree.modele }}
-  
+                        <div class="scroll">
+                            {{-- draggable: balise de vue.draggable avec les parametres exclusifs du plugin + boucle for pour crawler chaque vehicule de la colone --}}
+                            <draggable class="list-group" ghost-class="ghost" :options="{animation:150}" :list="vehiculesData[nom]" group="people" @change="changeStatut('id', $event)" >
+        
+                                <div class="list-group-item card" v-for="(entree, index)  in vehiculesData[nom]" :key="entree.id">    
+                                    <div class="card-body">
+                                        <h5 class="card-title">@{{ entree.imat }}</h5>
+                                        <p class="card-text">@{{ nom }} </p>
+                                        <p class="card-text">marque @{{ entree.marque }}, modèle @{{ entree.modele }}</p>
+                                        <button class="btn btn-outline-info" data-toggle="modal"  data-target="#vehiculeModal" v-on:click="getModal( entree.id )">Voir la carte</button>
+                                    </div>  
+                                </div>
+                                
+                            </draggable>
                         </div>
-                    </draggable>
                 </div>
-            @endforeach
         </div>
 
-        <!-- Modale affichant les infos d'un vehicule -->
+         <!-- Modale affichant les infos d'un vehicule -->
         <div class="modal fade" id="vehiculeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
             <div class="modal-dialog" role="document" >
                 <div class="modal-content" >
@@ -34,10 +37,15 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        @{{ vehiculeModal.imat }}, Statut: @{{ vehiculeModal.statut }}, @{{ vehiculeModal.marque }}, @{{ vehiculeModal.modele }}
-                        <img v-if="vehiculeModal.image" :src="vehiculeModal.link" alt="photo">
-            
+                    <div class="modal-body card">
+                            <img v-if="vehiculeModal.image" class="card-img-top" :src="vehiculeModal.link" alt="photo">
+                            <div class="card-body">
+                                
+                                <h5 class="card-title">@{{ vehiculeModal.imat }}</h5>
+                                <p class="card-text">@{{ Statuts[vehiculeModal.id_statut] }} </p>
+                                <p class="card-text">marque @{{ vehiculeModal.marque }}, modèle @{{ vehiculeModal.modele }}</p>
+                            </div>
+                        
                     </div>
                     <div class="modal-footer">
                         <button  type="button" class="btn btn-danger" name="toto" v-on:click="softDeleteVehicules( vehiculeModal.id )" data-dismiss="modal">supprimer</button>
@@ -48,10 +56,14 @@
         </div>
 
     {{-- fin de la modal --}}
-       
-    @section('script')
-    
-        <script src="//cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
-    @endsection
 
+
+@endsection
+       
+@section('script')
+    
+    <script src="//cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
+    <script>
+        var Statuts = @json($statuts);
+    </script>
 @endsection

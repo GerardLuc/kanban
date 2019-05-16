@@ -51564,7 +51564,8 @@ var app = new Vue({
     formImat: '',
     formModele: '',
     formMarque: '',
-    formStatut: ''
+    formStatut: '',
+    Statuts: Statuts
   },
   methods: {
     /**

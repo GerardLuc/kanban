@@ -10,13 +10,24 @@
 
     </head>
     <body>
-        {{-- appelle la fonction app dans la vue --}}
-        <div class="container" id="app">
-            @yield('content')
 
-        </div>
-        @yield('script')
-        
+            
+            {{-- appelle la fonction app dans la vue --}}
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active"><a class="nav-link btn btn-outline-info" href="/vehicule">Voir les vehicules</a></li>
+                        <li class="nav-item active"><a class="nav-link btn btn-outline-info" href="/vehicule/edit">Creer un vehicule</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <div id="app" >
+                
+
+                @yield('content')
+
+            </div>
+            @yield('script')
         
         <script src="/js/app.js"></script>
         

@@ -10667,9 +10667,64 @@ a.text-dark:focus {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.item-dropzone-area {
-  background-color: red;
-  height: 20px;
-  width: 100%;
+ul {
+  margin: auto;
+}
+
+li {
+  margin: 0 2rem;
+}
+
+.button {
+  margin-top: 35px;
+}
+
+.ghost {
+  transition: 0s;
+  opacity: 0.5;
+  background: #c8ebfb;
+}
+
+#app {
+  position: relative;
+}
+
+.scroll {
+  max-height: 50rem;
+  overflow-y: auto;
+}
+
+.scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Handle */
+
+.scroll::-webkit-scrollbar-thumb {
+  background: #c8ebfb;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+
+.scroll::-webkit-scrollbar-thumb:hover {
+  background: #9edcf8;
+}
+
+h3 {
+  text-align: center;
+}
+
+.colonne {
+  margin-bottom: 30px;
+  padding: 0;
+}
+
+.ml0 {
+  margin-left: 0 !important;
+}
+
+.mr0 {
+  margin-right: 0 !important;
 }
 

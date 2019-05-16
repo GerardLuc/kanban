@@ -13,10 +13,6 @@ use Storage;
 
 class vehiculeController extends Controller
 {
-    public function vehicule(){
-
-        return view('vehicules');
-    }
 
 
     /**
@@ -50,8 +46,9 @@ class vehiculeController extends Controller
 
                 $tab_vehicules [$statut['nom']] = $vehicule;
             }
-        }
+        }           
 
+        
 
         return $tab_vehicules;
     }
@@ -71,9 +68,9 @@ class vehiculeController extends Controller
             // id->nom
             $table_statut [$statut->id] = $statut->nom;
         }
+        // var_dump($table_statut);exit;
 
         return view('vehicules', ['statuts' => $table_statut]);
-
     }
 
     
