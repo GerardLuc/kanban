@@ -51652,6 +51652,11 @@ var app = new Vue({
         console.log(error);
       });
     },
+
+    /**
+     * le boutton supprimer appelle vuejs-delete. Si on valide, on ferme la modale et on soft-delete le vehicule avec Axios.
+     * @param {*} id_vehicule 
+     */
     softDeleteVehicules: function softDeleteVehicules(id_vehicule) {
       var baseThis = this;
       this.$dialog.confirm('Voulez-vous vraiment supprimer ce vehicule?').then(function () {
