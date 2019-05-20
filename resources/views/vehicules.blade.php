@@ -5,7 +5,7 @@
 
         {{-- include les searchbar --}}
         @include('searchbar')
-        <div  class="row ml0 mr0">
+        <div  class="row ml0 mr0 ">
             <div v-for="(nom, id) in Statuts" class="col-lg col-md-4 col-sm-6  col-xs-12 colonne"> 
             <h3>@{{ nom }}: <span>@{{ vehiculesData[nom] == undefined ? 0 : vehiculesData[nom].length }}</span></h3>
 

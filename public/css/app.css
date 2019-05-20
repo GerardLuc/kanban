@@ -11140,8 +11140,11 @@ li {
 }
 
 .scroll {
-  max-height: 45rem;
   overflow-y: auto;
+}
+
+.list-group {
+  height: 45rem;
 }
 
 .scroll::-webkit-scrollbar {
