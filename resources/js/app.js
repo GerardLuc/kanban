@@ -4,7 +4,10 @@ window.Vue = require('vue');
 import VuejsDialog from "vuejs-dialog";
 import draggable from 'vuedraggable';
 
-Vue.use(VuejsDialog);
+Vue.use(VuejsDialog, {
+    okText: 'Continuer',
+    cancelText: 'Annuler',
+  });
 
 const app = new Vue({
     el: '#app',
@@ -115,6 +118,8 @@ const app = new Vue({
 
             this.$dialog.confirm('Voulez-vous vraiment supprimer ce vehicule?')
             .then(function () {
+
+                $('#vehiculeModal').modal('toggle');
 
                 axios.post('vehicule/delete',{
                     id_vehicule: id_vehicule,

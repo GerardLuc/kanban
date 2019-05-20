@@ -51567,7 +51567,10 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
 
-Vue.use(vuejs_dialog__WEBPACK_IMPORTED_MODULE_0___default.a);
+Vue.use(vuejs_dialog__WEBPACK_IMPORTED_MODULE_0___default.a, {
+  okText: 'Continuer',
+  cancelText: 'Annuler'
+});
 var app = new Vue({
   el: '#app',
   components: {
@@ -51652,6 +51655,7 @@ var app = new Vue({
     softDeleteVehicules: function softDeleteVehicules(id_vehicule) {
       var baseThis = this;
       this.$dialog.confirm('Voulez-vous vraiment supprimer ce vehicule?').then(function () {
+        $('#vehiculeModal').modal('toggle');
         axios.post('vehicule/delete', {
           id_vehicule: id_vehicule
         }).then(function (response) {
