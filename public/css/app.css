@@ -11190,3 +11190,8 @@ h3 span {
   margin-right: 0;
 }
 
+.position-absolute {
+  right: 30px;
+  top: 30px;
+}
+

@@ -35,25 +35,25 @@
                     <div class="modal-header">
                         
                         <h5 class="modal-title" id="exampleModalLabel">Imatriculation @{{ vehiculeModal.imat }}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-
+                        
                     </div>
-                    <div class="modal-body card">
+                    <div class="modal-body card position-relative">
 
                         <img v-if="vehiculeModal.image" class="card-img-top" :src="vehiculeModal.link" alt="photo">
                         <div class="card-body">
-
+                            <button  type="button" class="btn btn-light alertSupress position-absolute" v-on:click="softDeleteVehicules( vehiculeModal.id )">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                             <p class="card-text">@{{ Statuts[vehiculeModal.id_statut] }} </p>
                             <p class="card-text">marque @{{ vehiculeModal.marque }}, modèle @{{ vehiculeModal.modele }}</p>
+                            
+                            
                             
                         </div>
                         
                     </div>
                     <div class="modal-footer">
 
-                        <button  type="button" class="btn btn-danger alertSupress" v-on:click="softDeleteVehicules( vehiculeModal.id )">supprimer</button>
                         <a :href="`/vehicule/edit/${vehiculeModal.id}`" class="btn btn-secondary">Editer</a>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
 
